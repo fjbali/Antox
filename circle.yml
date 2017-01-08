@@ -218,7 +218,7 @@ dependencies:
     - rm -Rf app/src/main/java/im/ ; exit 0
 
     - find ~ -name 'libtox4j*' -exec ls -al {} \; 2>&1| grep -i \.so ; exit 0
-    - jarfile=$(find /home/ubuntu/.ivy2/local/org.toktok/tox4j-c_2.11/ -name 'tox4j-c_*.jar' 2> /dev/null | tail -1) ; echo $jarfile > /tmp/jarfile3
+    - jarfile="/home/ubuntu/.ivy2/local/org.toktok/tox4j-c_2.11/0.1.2-SNAPSHOT/jars/tox4j-c_2.11.jar" ; echo $jarfile > /tmp/jarfile3
     - echo $(cat /tmp/jarfile3)
     - ls -al $(cat /tmp/jarfile3)
     - unzip -t $(cat /tmp/jarfile3) ; exit 0
