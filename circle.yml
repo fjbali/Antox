@@ -160,6 +160,7 @@ dependencies:
     - echo "/home/ubuntu/tox4j-api_2.11-0.1.1.jar" > /tmp/jarfile2
     - cp -v $(cat /tmp/jarfile1) $(cat /tmp/jarfile2)
     - ls -al $(cat /tmp/jarfile2)
+    - unzip -t $(cat /tmp/jarfile2)|sort|grep -v detected > /tmp/jar1.list ; exit 0
     #   ---- copy to Antox dir --------------
 
 # ------ build tox4j API stuff ------
@@ -221,6 +222,8 @@ dependencies:
     - echo $(cat /tmp/jarfile3)
     - ls -al $(cat /tmp/jarfile3)
     - unzip -t $(cat /tmp/jarfile3) ; exit 0
+    - unzip -t /home/ubuntu/.ivy2/cache/org.toktok/tox4j-api_2.11/jars/tox4j-api_2.11-0.1.2.jar|sort|grep -v detected > /tmp/jar2.list ; exit 0
+    - diff -u /tmp/jar1.list /tmp/jar2.list ; exit 0
     - cp -v $(cat /tmp/jarfile3) app/libs/tox4j-c_2.11.jar
     - cp -v $(cat /tmp/jarfile3) $CIRCLE_ARTIFACTS/tox4j-c_2.11.jar ; exit 0
 
