@@ -28,11 +28,11 @@ apply plugin: "jp.leafytree.android-scala"
 
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion '25.0.2'
+    compileSdkVersion 24
+    buildToolsVersion '24.0.2'
 
     dexOptions {
-        javaMaxHeapSize "1500m"
+        javaMaxHeapSize "1300m"
         // preDexLibraries = true
     }
 
@@ -42,7 +42,7 @@ android {
 
         renderscriptTargetApi 23
 
-        multiDexEnabled false
+        multiDexEnabled true
 
         testInstrumentationRunner "android.test.InstrumentationTestRunner"
         applicationId "chat.tox.antox"
@@ -117,11 +117,11 @@ dependencies {
     // 1.8.2 -> [1.8.3, 1.9.0, 1.10.3]
     compile 'org.scodec:scodec-core_2.11:1.10.3'
     compile 'org.apache.commons:commons-imaging:1.0-SNAPSHOT' // 1.0-SNAPSHOT -> [1.0-R1534292]
-    compile 'com.android.support:design:25.1.0'
-    compile 'com.android.support:recyclerview-v7:25.1.0'
-    compile 'com.android.support:appcompat-v7:25.1.0'
-    compile 'com.android.support:gridlayout-v7:25.1.0'
-    compile 'com.android.support:support-v4:25.1.0'
+    compile 'com.android.support:design:24.1.1'
+    compile 'com.android.support:recyclerview-v7:24.1.1'
+    compile 'com.android.support:appcompat-v7:24.1.1'
+    compile 'com.android.support:gridlayout-v7:24.1.1'
+    compile 'com.android.support:support-v4:24.1.1'
     //
     //
     //
