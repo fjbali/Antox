@@ -32,8 +32,8 @@ android {
     buildToolsVersion '25.0.2'
 
     dexOptions {
-        javaMaxHeapSize "1700m"
-        preDexLibraries = false
+        javaMaxHeapSize "2200m"
+        preDexLibraries = true
     }
 
     defaultConfig {
@@ -42,7 +42,7 @@ android {
 
         renderscriptTargetApi 23
 
-        multiDexEnabled true
+        multiDexEnabled false
 
         testInstrumentationRunner "android.test.InstrumentationTestRunner"
         applicationId "chat.tox.antox"
