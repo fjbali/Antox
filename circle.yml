@@ -13,8 +13,8 @@ machine:
     ANDROID_HOME: /usr/local/android-sdk-linux
     ANDROID_SDK: /usr/local/android-sdk-linux/
     _SDK_: /usr/local/android-sdk-linux/
-    GRADLE_OPTS: '-Dorg.gradle.jvmargs="-Xmx1650m -XX:+HeapDumpOnOutOfMemoryError"'
-    SBT_OPTS: "-Xms512M -Xmx1536M -Xss1M -XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=256M"
+    GRADLE_OPTS: '-Dorg.gradle.jvmargs="-Xmx1900m -XX:+HeapDumpOnOutOfMemoryError"'
+    SBT_OPTS: "-Xms512M -Xmx1700M -Xss1M -XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=256M"
     CLASS_P: chat.tox.antox
     START_INTENT_P: chat.tox.antox.activities.LoginActivity
     DEBIAN_FRONTEND: noninteractive
