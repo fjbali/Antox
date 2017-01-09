@@ -32,8 +32,8 @@ android {
     buildToolsVersion '25.0.2'
 
     dexOptions {
-        javaMaxHeapSize "2200m"
-        preDexLibraries = true
+        javaMaxHeapSize "1500m"
+        // preDexLibraries = true
     }
 
     defaultConfig {
@@ -173,7 +173,7 @@ dependencies {
 
 tasks.withType(ScalaCompile) {
     // If you want to use scala compile daemon
-    scalaCompileOptions.useCompileDaemon = true
+    scalaCompileOptions.useCompileDaemon = false
     // Suppress deprecation warnings
     scalaCompileOptions.deprecation = false
     // Additional parameters
