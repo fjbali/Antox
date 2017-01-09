@@ -13,8 +13,8 @@ machine:
     ANDROID_HOME: /usr/local/android-sdk-linux
     ANDROID_SDK: /usr/local/android-sdk-linux/
     _SDK_: /usr/local/android-sdk-linux/
-    GRADLE_OPTS: '-Dorg.gradle.jvmargs="-Xmx1900m -XX:+HeapDumpOnOutOfMemoryError"'
-    SBT_OPTS: "-Xms512M -Xmx1700M -Xss1M -XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=256M"
+    GRADLE_OPTS: '-Dorg.gradle.jvmargs="-Xmx2200m -XX:+HeapDumpOnOutOfMemoryError"'
+    SBT_OPTS: "-Xms512M -Xmx2200M -Xss1M -XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=256M"
     CLASS_P: chat.tox.antox
     START_INTENT_P: chat.tox.antox.activities.LoginActivity
     DEBIAN_FRONTEND: noninteractive
@@ -267,6 +267,11 @@ dependencies:
     - cat app/build.gradle | grep 'useCompileDaemon'
     - sed -i -e 's#scalaCompileOptions.useCompileDaemon = true#scalaCompileOptions.useCompileDaemon = false#' app/build.gradle
     - cat app/build.gradle | grep 'useCompileDaemon'
+
+
+    # -- what stuff is running now? need to kills to get more free mem
+    - ps auxwww ; exit 0
+    - cat /proc/meminfo ; exit 0
 
     - ./gradlew build -x lint; exit 0 # first build will FAIL !!
     - ./gradlew assembleDebug --stacktrace --info --no-daemon
