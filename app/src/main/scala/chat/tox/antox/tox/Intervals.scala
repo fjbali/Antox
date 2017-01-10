@@ -18,5 +18,5 @@ trait Intervals {
 object IntervalLevels extends Enumeration {
   type IntervalLevels = Value
   val WORKING = Value(50)
-  val AWAKE = Value(1000)
+  val AWAKE = Value(1000) // check
 }
