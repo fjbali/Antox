@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
 
     <style name="AppCompatAlertDialogStyle" parent="Theme.AppCompat.Light.Dialog.Alert">
         <item name="colorAccent">@color/black</item>
@@ -88,7 +88,7 @@
 
     <style name="LoginButtonStyle" parent="Widget.AppCompat.Button.Colored">
         <item name="colorButtonNormal">@color/LoginButtonColor</item>
-        <item name="android:textColor">@color/LoginButtonTextColor</item>
+        <item name="android:textColor">@color/white</item>
     </style>
 
     <item name="CreateAccountButtonColor" type="color">#414141</item>

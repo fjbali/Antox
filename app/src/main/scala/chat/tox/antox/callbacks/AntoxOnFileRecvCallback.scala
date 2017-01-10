@@ -7,7 +7,7 @@ import chat.tox.antox.tox.ToxSingleton
 import chat.tox.antox.utils.{AntoxNotificationManager, Constants, Options}
 import chat.tox.antox.wrapper.FileKind.AVATAR
 import chat.tox.antox.wrapper.{FileKind, FriendInfo}
-import im.tox.tox4j.core.data.{ToxFilename, ToxNickname}
+import im.tox.tox4j.core.data.ToxFilename
 import im.tox.tox4j.core.enums.ToxFileControl
 
 class AntoxOnFileRecvCallback(ctx: Context) {
