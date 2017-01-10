@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources xmlns:tools="http://schemas.android.com/tools" xmlns:android="http://schemas.android.com/apk/res/android">
+<resources xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
 
     <style name="AppCompatAlertDialogStyle" parent="Theme.AppCompat.Light.Dialog.Alert">
         <item name="colorAccent">@color/black</item>
@@ -83,12 +83,20 @@
         <item name="android:windowBackground">@drawable/background_splash</item>
     </style>
 
-    <item name="LoginButtonColor" type="color">#FF99CC00</item>
-    <item name="LoginButtonTextColor" type="color">#FFFFFF</item>
-    
+    <item name="LoginButtonColor" type="color">@color/brand_secondary</item>
+    <item name="LoginButtonTextColor" type="color">@color/white</item>
+
     <style name="LoginButtonStyle" parent="Widget.AppCompat.Button.Colored">
         <item name="colorButtonNormal">@color/LoginButtonColor</item>
         <item name="android:textColor">@color/LoginButtonTextColor</item>
+    </style>
+
+    <item name="CreateAccountButtonColor" type="color">#414141</item>
+    <item name="CreateAccountButtonTextColor" type="color">@color/white</item>
+
+    <style name="CreateAccountButtonStyle" parent="Widget.AppCompat.Button.Colored">
+        <item name="colorButtonNormal">@color/CreateAccountButtonColor</item>
+        <item name="android:textColor">@color/CreateAccountButtonTextColor</item>
     </style>
 
 </resources>
