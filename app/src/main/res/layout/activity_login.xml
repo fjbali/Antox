@@ -37,6 +37,7 @@
         <!-- android:background="@color/brand_secondary" -->
         <Button
             android:id="@+id/login_login_button"
+            style="@style/LoginButtonStyle"
             android:layout_width="300dp"
             android:layout_gravity="center"
             android:textColor="@color/white"
