@@ -1,10 +1,7 @@
 package chat.tox.antox;
 
-import android.app.AlarmManager;
 import android.app.Application;
-import android.app.PendingIntent;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Build;
 import android.preference.PreferenceManager;
 import android.support.multidex.MultiDex;
@@ -21,8 +18,6 @@ import java.io.StringWriter;
 import java.io.Writer;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-
-import im.tox.tox4j.core.options.ToxOptions;
 
 /**
  * Created by zoff99 on 05.01.2017.
@@ -63,7 +58,8 @@ public class MainApplication extends Application
     }
 
     @Override
-    protected void attachBaseContext(Context base) {
+    protected void attachBaseContext(Context base)
+    {
         super.attachBaseContext(base);
         MultiDex.install(this);
     }
