@@ -34,9 +34,9 @@
             android:layout_marginTop="48dp"
             android:singleLine="true" />
 
+        <!-- android:background="@color/brand_secondary" -->
         <Button
             android:id="@+id/login_login_button"
-            android:background="@color/brand_secondary"
             android:layout_width="300dp"
             android:layout_gravity="center"
             android:textColor="@color/white"
@@ -47,9 +47,9 @@
 
     </LinearLayout>
 
+    <!-- android:background="#414141" -->
     <Button
         android:id="@+id/login_create_button"
-        android:background="#414141"
         android:layout_width="300dp"
         android:layout_gravity="center"
         android:textColor="@color/white"
