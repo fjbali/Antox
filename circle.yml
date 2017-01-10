@@ -265,7 +265,7 @@ dependencies:
     - mkdir -p ~/and_stud_prj/app/libs/
     - cp -av app/libs/tox*jar ~/and_stud_prj/app/libs/
     - mkdir -p ~/and_stud_prj/app/src/main/java/org/libsodium/
-    - cp -av ~/libsodium-jni/src/main/java/org/libsodium/* ~/and_stud_prj/app/src/main/java/org/libsodium/
+    - cp -av ./libsodium-jni/src/main/java/org/libsodium/* ~/and_stud_prj/app/src/main/java/org/libsodium/
     - mkdir -p ~/and_stud_prj/app/src/main/jniLibs/
     - cp -av app/src/main/jniLibs/* ~/and_stud_prj/app/src/main/jniLibs/
     - cd ~/and_stud_prj/ ; zip $CIRCLE_ARTIFACTS/and_stud_prj.zip *
