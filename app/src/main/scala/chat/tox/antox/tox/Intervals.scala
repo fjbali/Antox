@@ -17,6 +17,9 @@ trait Intervals {
 // scalastyle:off
 object IntervalLevels extends Enumeration {
   type IntervalLevels = Value
-  val WORKING = Value(50)
-  val AWAKE = Value(1000) // check
+  //
+  // try [1 secs / 4 secs]
+  val WORKING = Value(1000) // Orig: Value(50) // only in filetransfers it seems
+  val AWAKE = Value(4000) // Orig: Value(1000) // everywhere else
+  //
 }

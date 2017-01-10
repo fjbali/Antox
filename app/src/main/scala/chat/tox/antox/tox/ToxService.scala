@@ -69,9 +69,12 @@ class ToxService extends Service {
           })
 
         var ticks = 0
-        val toxCoreIterationRatio = Math.ceil(ToxSingleton.tox.interval/ToxSingleton.toxAv.interval).toInt
+        // val toxAv_interval_longer = ToxSingleton.toxAv.interval * 20
+        val toxAv_interval_longer = 4000 // 4 secs
+        val toxCoreIterationRatio = Math.ceil(ToxSingleton.tox.interval/toxAv_interval_longer).toInt
         System.out.println("ToxService:" + "ToxSingleton.tox.interval = " + ToxSingleton.tox.interval)
         System.out.println("ToxService:" + "ToxSingleton.toxAv.interval = " + ToxSingleton.toxAv.interval)
+        System.out.println("ToxService:" + "toxAv_interval_longer = " + toxAv_interval_longer)
         System.out.println("ToxService:" + "toxCoreIterationRatio = " + toxCoreIterationRatio)
         System.out.println("ToxService:" + "connectionCheckInterval = " + connectionCheckInterval)
 
@@ -85,17 +88,13 @@ class ToxService extends Service {
           } else {
             try {
               if(ticks % toxCoreIterationRatio == 0) {
+                // System.out.println("ToxService:" + "ToxSingleton.tox.iterate")
                 ToxSingleton.tox.iterate(toxCallbackListener)
               }
+              // System.out.println("ToxService:" + "ToxSingleton *+ toxAv +* iterate")
               ToxSingleton.toxAv.iterate(toxAvCallbackListener)
 
-              // if (ticks % 100 == 0) {
-                // this does not work, crash!? *TODO*
-                // *TODO*
-                // println(ToxJniLog().entries.filter(_.name == "tox4j_video_receive_frame_cb").map(_.elapsedNanos).toList.map(nanos => s" elapsed nanos video cb: $nanos").mkString("\n"))
-                // *TODO*
-              // }
-              val time = ToxSingleton.toxAv.interval
+              val time = toxAv_interval_longer
               Thread.sleep(time)
               ticks += 1
             } catch {
