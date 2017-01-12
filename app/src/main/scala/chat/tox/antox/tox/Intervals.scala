@@ -18,8 +18,8 @@ trait Intervals {
 object IntervalLevels extends Enumeration {
   type IntervalLevels = Value
   //
-  // try [1 secs / 4 secs]
+  // try [1 secs / 2 secs]
   val WORKING = Value(1000) // Orig: Value(50) // only in filetransfers it seems
-  val AWAKE = Value(4000) // Orig: Value(1000) // everywhere else
+  val AWAKE = Value(2000) // Orig: Value(1000) // everywhere else
   //
 }
