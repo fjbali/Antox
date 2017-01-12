@@ -7,11 +7,11 @@ import android.os.IBinder
 import android.preference.PreferenceManager
 import chat.tox.antox.av.CallService
 import chat.tox.antox.callbacks.{AntoxOnSelfConnectionStatusCallback, ToxCallbackListener, ToxavCallbackListener}
-import chat.tox.antox.utils.AntoxLog
+import chat.tox.antox.utils.{AntoxLog, Options}
 import im.tox.tox4j.core.enums.ToxConnection
-import im.tox.tox4j.impl.jni.ToxJniLog
-import rx.lang.scala.schedulers.{AndroidMainThreadScheduler}
+import rx.lang.scala.schedulers.AndroidMainThreadScheduler
 import rx.lang.scala.{Observable, Subscription}
+
 import scala.concurrent.duration._
 
 class ToxService extends Service {
@@ -20,9 +20,15 @@ class ToxService extends Service {
 
   private var keepRunning: Boolean = true
 
-  private val connectionCheckInterval =  30000 // 10000 //in ms
+  private val connectionCheckInterval = 10000 // 10000 //in ms
 
   private val reconnectionIntervalSeconds = 120 // 60
+
+  // 5 minutes in milliseconds
+  private val BATTERY_SAVING_DELAY = (5 * 60 * 1000)
+  // how many normal loops to run in battery saving mode
+  private val NORMAL_LOOPS = 20
+  var isConnectedNow = false
 
   private var callService: CallService = _
 
@@ -53,31 +59,39 @@ class ToxService extends Service {
           .distinctUntilChanged
           .subscribe(toxConnection => {
             if (toxConnection != ToxConnection.NONE) {
-              if (reconnection != null && !reconnection .isUnsubscribed) {
+              if (reconnection != null && !reconnection.isUnsubscribed) {
                 reconnection.unsubscribe()
               }
+              isConnectedNow = true
               AntoxLog.debug("Tox connected. Stopping reconnection")
             } else {
               reconnection = Observable
                 .interval(reconnectionIntervalSeconds seconds)
                 .subscribe(x => {
-                    AntoxLog.debug("Reconnecting")
-                    ToxSingleton.bootstrap(getApplicationContext).subscribe()
-                  })
+                  AntoxLog.debug("Reconnecting")
+                  ToxSingleton.bootstrap(getApplicationContext).subscribe()
+                })
+              isConnectedNow = false
               AntoxLog.debug(s"Tox disconnected. Scheduled reconnection every $reconnectionIntervalSeconds seconds")
             }
           })
 
+        var loops = 0
         var ticks = 0
         // val toxAv_interval_longer = ToxSingleton.toxAv.interval * 20
-        val toxAv_interval_longer = 2000 // 2 secs
-        val toxCoreIterationRatio = Math.ceil(ToxSingleton.tox.interval/toxAv_interval_longer).toInt
+        val toxAv_interval_longer = 1000 // 1 secs
+        System.out.println("ToxService:div 1")
+        val toxCoreIterationRatio = Math.ceil(ToxSingleton.tox.interval / toxAv_interval_longer).toInt
+        System.out.println("ToxService:div 2")
         System.out.println("ToxService:" + "ToxSingleton.tox.interval = " + ToxSingleton.tox.interval)
         System.out.println("ToxService:" + "ToxSingleton.toxAv.interval = " + ToxSingleton.toxAv.interval)
         System.out.println("ToxService:" + "toxAv_interval_longer = " + toxAv_interval_longer)
         System.out.println("ToxService:" + "toxCoreIterationRatio = " + toxCoreIterationRatio)
         System.out.println("ToxService:" + "connectionCheckInterval = " + connectionCheckInterval)
 
+        // --------------- main tox loop ---------------
+        // --------------- main tox loop ---------------
+        // --------------- main tox loop ---------------
         while (keepRunning) {
           if (!ToxSingleton.isToxConnected(preferences, thisService)) {
             try {
@@ -87,11 +101,29 @@ class ToxService extends Service {
             }
           } else {
             try {
-              if(ticks % toxCoreIterationRatio == 0) {
-                // System.out.println("ToxService:" + "ToxSingleton.tox.iterate")
+              if (Options.batterySavingMode) {
+                loops = loops + 1
+                if (loops > NORMAL_LOOPS) {
+                  if (isConnectedNow) {
+                    loops = 0
+                    try {
+                      System.out.println("ToxService:" + "batterysavings=true will sleep for " + BATTERY_SAVING_DELAY + " ms")
+                      Thread.sleep(BATTERY_SAVING_DELAY)
+                    } catch {
+                      case e: Exception =>
+                    }
+                  }
+                  else {
+                    System.out.println("ToxService:" + "batterysavings=true, want to go to sleep but not connected yet ...")
+                  }
+                }
+              }
+
+              if (ticks % toxCoreIterationRatio == 0) {
+                System.out.println("ToxService:" + "ToxSingleton.tox.iterate")
                 ToxSingleton.tox.iterate(toxCallbackListener)
               }
-              // System.out.println("ToxService:" + "ToxSingleton *+ toxAv +* iterate")
+              System.out.println("ToxService:" + "ToxSingleton *+ toxAv +* iterate")
               ToxSingleton.toxAv.iterate(toxAvCallbackListener)
 
               val time = toxAv_interval_longer
@@ -101,8 +133,12 @@ class ToxService extends Service {
               case e: Exception =>
                 e.printStackTrace()
             }
+
           }
         }
+        // --------------- main tox loop ---------------
+        // --------------- main tox loop ---------------
+        // --------------- main tox loop ---------------
 
         connectionSubscription.unsubscribe()
       }
