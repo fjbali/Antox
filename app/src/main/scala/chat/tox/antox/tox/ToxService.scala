@@ -70,7 +70,7 @@ class ToxService extends Service {
 
         var ticks = 0
         // val toxAv_interval_longer = ToxSingleton.toxAv.interval * 20
-        val toxAv_interval_longer = 4000 // 4 secs
+        val toxAv_interval_longer = 2000 // 2 secs
         val toxCoreIterationRatio = Math.ceil(ToxSingleton.tox.interval/toxAv_interval_longer).toInt
         System.out.println("ToxService:" + "ToxSingleton.tox.interval = " + ToxSingleton.tox.interval)
         System.out.println("ToxService:" + "ToxSingleton.toxAv.interval = " + ToxSingleton.toxAv.interval)
@@ -118,8 +118,16 @@ class ToxService extends Service {
 
   override def onDestroy() {
     super.onDestroy()
+
+    System.out.println("ToxService:" + "onDestroy(): enter")
+
     keepRunning = false
+
+    System.out.println("ToxService:" + "onDestroy(): serviceThread.interrupt")
     serviceThread.interrupt()
+    System.out.println("ToxService:" + "onDestroy(): serviceThread waiting to end ...")
+    serviceThread.join()
+    System.out.println("ToxService:" + "onDestroy(): serviceThread: ended")
 
     callService.destroy()
 
@@ -127,5 +135,6 @@ class ToxService extends Service {
     ToxSingleton.isInited = false
     ToxSingleton.tox.close()
     AntoxLog.debug("onDestroy() called for Tox service")
+    System.out.println("ToxService:" + "onDestroy(): ready")
   }
 }
