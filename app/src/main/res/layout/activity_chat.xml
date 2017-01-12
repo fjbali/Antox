@@ -122,6 +122,7 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="bottom"
                 android:layout_weight="1.0"
+                android:background="@color/white_absolute"
                 android:visibility="visible"
                 />
         </TableRow>
