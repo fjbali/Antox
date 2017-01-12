@@ -3,6 +3,7 @@ package chat.tox.antox;
 import android.app.Application;
 import android.content.Context;
 import android.os.Build;
+import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.support.multidex.MultiDex;
 import android.util.Log;
@@ -128,16 +129,14 @@ public class MainApplication extends Application
             Calendar c = Calendar.getInstance();
             SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd_HH_mm_ss");
             String formattedDate = df.format(c.getTime());
-            // *TODO* hardcoded path --> bad!!
-            File myDir = new File("/sdcard/Antox/");
+            File myDir = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/Antox"); //new File("/sdcard/Antox/");
             myDir.mkdirs();
-            // *TODO* hardcoded path --> bad!!
-            File myFile = new File("/sdcard/Antox/crash_" + formattedDate + ".txt");
+            File myFile = new File(myDir.getAbsolutePath() + "/crash_" + formattedDate + ".txt");
             System.out.println("MainApplication:" + randnum + ":" + "crash file=" + myFile.getAbsolutePath());
             myFile.createNewFile();
             FileOutputStream fOut = new FileOutputStream(myFile);
             OutputStreamWriter myOutWriter = new OutputStreamWriter(fOut);
-            myOutWriter.append(last_stack_trace_as_string + "\n" + log_detailed);
+            myOutWriter.append("Errormesage:\n" + last_stack_trace_as_string + "\n\n===================================\n\n" + log_detailed);
             myOutWriter.close();
             fOut.close();
             // also save to crash file ----
@@ -212,8 +211,6 @@ public class MainApplication extends Application
             // PendingIntent intent = PendingIntent.getActivity(getBaseContext(), 0, new Intent(getApplicationContext(), chat.tox.antox.activities.LoginActivity.class), Intent.FLAG_ACTIVITY_NEW_TASK);
             // AlarmManager mgr = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
             // mgr.set(AlarmManager.RTC, System.currentTimeMillis() + 2000, intent); // restart app after 2 second delay
-
-            PreferenceManager.getDefaultSharedPreferences(this.getApplicationContext()).edit().putInt("crashes", 0).commit();
         }
 
         System.out.println("MainApplication:" + randnum + ":" + "System.exit(2)");
