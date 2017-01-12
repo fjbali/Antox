@@ -3,7 +3,7 @@ package chat.tox.antox.activities
 import java.util
 
 import android.content.{Context, Intent}
-import android.os.Bundle
+import android.os.{Build, Bundle}
 import android.preference.PreferenceManager
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.RecyclerView.{ItemAnimator, OnScrollListener}
@@ -26,6 +26,8 @@ import im.tox.tox4j.core.enums.ToxMessageType
 import jp.wasabeef.recyclerview.animators.LandingAnimator
 import rx.lang.scala.schedulers.{AndroidMainThreadScheduler, IOScheduler}
 import rx.lang.scala.{Observable, Subscription}
+import xyz.danoz.recyclerviewfastscroller.AbsRecyclerViewFastScroller
+import xyz.danoz.recyclerviewfastscroller.vertical.VerticalRecyclerViewFastScroller
 
 import scala.collection.JavaConversions._
 import scala.collection.mutable.ArrayBuffer
@@ -54,6 +56,8 @@ abstract class GenericChatActivity[KeyType <: ContactKey] extends AppCompatActiv
 
   val defaultMessagePageSize = 50
   var numMessagesShown = defaultMessagePageSize
+
+  var fastScroller: VerticalRecyclerViewFastScroller = _
 
   override def onCreate(savedInstanceState: Bundle): Unit = {
     super.onCreate(savedInstanceState)
@@ -112,7 +116,31 @@ abstract class GenericChatActivity[KeyType <: ContactKey] extends AppCompatActiv
     // TODO -> enable again
 
 
-    chatListView.setVerticalScrollBarEnabled(true)
+    // --- fast scroll enable ---
+    fastScroller = this.findViewById(R.id.fastscroller2).asInstanceOf[VerticalRecyclerViewFastScroller]
+    fastScroller.setRecyclerView(chatListView)
+    fastScroller.setScrollerDirection(AbsRecyclerViewFastScroller.DIRECTION_NORMAL)
+    fastScroller.setScrollbarFadingEnabled(true)
+
+    if (Build.VERSION.SDK_INT >= 11) {
+      fastScroller.addOnLayoutChangeListener(new View.OnLayoutChangeListener{
+        override def onLayoutChange(v : View, left: Int, top: Int, right: Int, bottom: Int, oldLeft: Int, oldTop: Int, oldRight: Int, oldBottom: Int) {
+          if ( ((left-right)!= (oldLeft-oldRight)) || ((top-bottom)!= (oldTop-oldBottom)) )
+          {
+            // System.out.println("keyboard opened/closed? -> recalculate the scrollbar position");
+            fastScroller.onReLayout()
+          }
+        }
+      })
+    }
+
+    // -- custom --
+    chatListView.addOnScrollListener(fastScroller.getOnScrollListener())
+    // -- custom --
+    // --- fast scroll enable ---
+
+
+    //    chatListView.setVerticalScrollBarEnabled(true)
     chatListView.addOnScrollListener(new OnScrollListener {
 
       override def onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int): Unit = {
