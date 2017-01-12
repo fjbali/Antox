@@ -111,9 +111,9 @@ abstract class GenericChatActivity[KeyType <: ContactKey] extends AppCompatActiv
     chatListView.setLayoutManager(layoutManager)
     chatListView.setAdapter(adapter)
 
-    // TODO -> enable again
-    // chatListView.setItemAnimator(new LandingAnimator())
-    // TODO -> enable again
+    // TODO -> upgrade
+    chatListView.setItemAnimator(new LandingAnimator())
+    // TODO -> upgrade
 
 
     // --- fast scroll enable ---
