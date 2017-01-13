@@ -37,6 +37,7 @@ class FileTransferManager extends Intervals {
   }
 
   def remove(id: Long): Unit = {
+    System.out.println("FileTransferManager:" + "remove id="+id)
     val mTransfer = this.get(id)
     mTransfer match {
       case Some(t) =>
@@ -75,6 +76,8 @@ class FileTransferManager extends Intervals {
     val splitFileName = file.getName.split("\\.")
     val extension = splitFileName(splitFileName.length - 1)
     AntoxLog.debug("sendFileSendRequest", TAG)
+    System.out.println("FileTransferManager:" + "sendFileSendRequest")
+
 
     val length = if (stripExif && Constants.EXIF_FORMATS.contains(extension.toLowerCase)) {
       val input = new FileInputStream(file)
@@ -145,6 +148,8 @@ class FileTransferManager extends Intervals {
                           replaceExisting: Boolean,
                           context: Context) {
     AntoxLog.debug("fileIncomingRequest", TAG)
+    System.out.println("FileTransferManager:" + "fileIncomingRequest")
+
     var fileN = fileName
     val fileSplit = fileName.split("\\.")
     var filePre = ""
@@ -232,6 +237,8 @@ class FileTransferManager extends Intervals {
 
   def fileFinished(key: ContactKey, fileNumber: Integer, context: Context) {
     AntoxLog.debug("fileFinished", TAG)
+    System.out.println("FileTransferManager:" + "fileFinished filenum="+fileNumber)
+
     val transfer = State.transfers.get(key, fileNumber)
     transfer match {
       case Some(t) =>
@@ -255,6 +262,8 @@ class FileTransferManager extends Intervals {
 
   def cancelFile(key: ContactKey, fileNumber: Int, context: Context) {
     AntoxLog.debug("cancelFile", TAG)
+    System.out.println("FileTransferManager:" + "cancelFile filenum="+fileNumber)
+
     val db = State.db
     State.transfers.remove(key, fileNumber)
     db.clearFileNumber(key, fileNumber)
@@ -262,6 +271,8 @@ class FileTransferManager extends Intervals {
 
   def getProgress(id: Long): Long = {
     val mTransfer = State.transfers.get(id)
+    System.out.println("FileTransferManager:" + "getProgress id="+id)
+
     mTransfer match {
       case Some(t) => t.progress
       case None => 0
@@ -270,10 +281,14 @@ class FileTransferManager extends Intervals {
 
   def fileTransferStarted(key: ContactKey, fileNumber: Integer, ctx: Context) {
     AntoxLog.debug("fileTransferStarted", TAG)
+    System.out.println("FileTransferManager:" + "fileTransferStarted filenum="+fileNumber)
+
     State.db.fileTransferStarted(key, fileNumber)
   }
 
   def pauseFile(id: Long, ctx: Context) {
+    System.out.println("FileTransferManager:" + "pauseFile id="+id)
+
     AntoxLog.debug("pauseFile", TAG)
     val mTransfer = State.transfers.get(id)
     mTransfer match {

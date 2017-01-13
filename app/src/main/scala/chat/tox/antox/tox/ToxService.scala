@@ -28,7 +28,7 @@ class ToxService extends Service {
   // 2 minutes in milliseconds
   private val BATTERY_SAVING_DELAY = 2 * 60 * 1000
   // how many normal loops to run in battery saving mode [0.5 secs now per loop]
-  private val NORMAL_LOOPS = 120
+  private val NORMAL_LOOPS = 120 * 2
   var isConnectedNow = false
 
   private var callService: CallService = _
