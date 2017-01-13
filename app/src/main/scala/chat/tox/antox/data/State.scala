@@ -23,12 +23,21 @@ object State {
   val activeKey = BehaviorSubject[Option[ContactKey]](None)
   val activeKeySubscription = activeKey.subscribe(x => State.setActiveKey(x))
   val typing = BehaviorSubject[Boolean](false)
+  var autoAcceptFt: Boolean = false
 
   val transfers: FileTransferManager = new FileTransferManager()
 
   var db: AntoxDB = _
   private var _userDb: Option[UserDB] = None
   val callManager = new CallManager()
+
+  def getAutoAcceptFt() : Boolean = {
+    autoAcceptFt
+  }
+
+  def setAutoAcceptFt(b: Boolean) = {
+    autoAcceptFt = b
+  }
 
   def userDb(context: Context): UserDB = {
     _userDb match {

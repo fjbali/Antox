@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.Toolbar
 import android.view.{MenuItem, View, WindowManager}
 import chat.tox.antox.R
+import chat.tox.antox.data.State
 import chat.tox.antox.fragments.MainDrawerFragment
 import chat.tox.antox.theme.ThemeManager
 import chat.tox.antox.utils._
@@ -31,9 +32,7 @@ class MainActivity extends AppCompatActivity {
     // Set the right language
     selectLanguage()
 
-    System.out.println("LLLL:001")
     setContentView(R.layout.activity_main)
-    System.out.println("LLLL:002")
 
     // Use a toolbar so that the drawer goes above the action bar
     val toolbar = findViewById(R.id.toolbar).asInstanceOf[Toolbar]
@@ -67,6 +66,14 @@ class MainActivity extends AppCompatActivity {
 
     // Removes the drop shadow from the actionbar as it overlaps the tabs
     getSupportActionBar.setElevation(0)
+
+    // set autoaccept option on startup
+    State.setAutoAcceptFt(preferences.getBoolean("autoacceptft", false))
+    // System.out.println("load autoacceptft options : "+State.getAutoAcceptFt());
+
+    Options.videoCallStartWithNoVideo = preferences.getBoolean("videocallstartwithnovideo", false)
+    // System.out.println("load videocallstartwithnovideo options : "+Options.videoCallStartWithNoVideo);
+
   }
 
   def onClickAdd(v: View) {

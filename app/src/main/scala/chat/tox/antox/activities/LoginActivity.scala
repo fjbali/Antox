@@ -40,8 +40,8 @@ class LoginActivity extends AppCompatActivity with AdapterView.OnItemSelectedLis
     val userDb = State.userDb(this)
 
     // set autoaccept option on startup
-    Options.autoAcceptFt = preferences.getBoolean("autoacceptft", false)
-    // System.out.println("load autoacceptft options : "+Options.autoAcceptFt);
+    State.setAutoAcceptFt(preferences.getBoolean("autoacceptft", false))
+    // System.out.println("load autoacceptft options : "+State.getAutoAcceptFt());
 
     Options.videoCallStartWithNoVideo = preferences.getBoolean("videocallstartwithnovideo", false)
     // System.out.println("load videocallstartwithnovideo options : "+Options.videoCallStartWithNoVideo);

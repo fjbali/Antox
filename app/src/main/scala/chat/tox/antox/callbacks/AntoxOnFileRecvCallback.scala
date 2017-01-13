@@ -72,9 +72,9 @@ class AntoxOnFileRecvCallback(ctx: Context) {
     else {
 
 
-      // System.out.println("Options.autoAcceptFt:" + Options.autoAcceptFt);
+      // System.out.println("State.getAutoAcceptFt:" + State.getAutoAcceptFt());
 
-      if (Options.autoAcceptFt == true) {
+      if (State.getAutoAcceptFt() == true) {
         // System.out.println("autoAcceptFt == true");
         State.transfers.acceptFile(friendInfo.key, fileNumber, ctx)
       }

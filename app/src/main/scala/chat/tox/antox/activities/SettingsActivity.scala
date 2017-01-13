@@ -135,12 +135,12 @@ class SettingsActivity extends BetterPreferenceActivity with Preference.OnPrefer
     if (sharedPreferences.getBoolean("autoacceptft", false) == true)
     {
       // System.out.println("set autoacceptft = true");
-      Options.autoAcceptFt = true
+      State.setAutoAcceptFt(true)
     }
     else
     {
       // System.out.println("set autoacceptft = false");
-      Options.autoAcceptFt = false
+      State.setAutoAcceptFt(false)
     }
 
     if (sharedPreferences.getBoolean("videocallstartwithnovideo", false) == true)

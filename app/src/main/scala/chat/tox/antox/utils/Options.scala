@@ -4,7 +4,6 @@ object Options {
   var ipv6Enabled: Boolean = true
 
   var udpEnabled: Boolean = false
-  var autoAcceptFt: Boolean = false
   var videoCallStartWithNoVideo = false
   // TODO: hardcoded for now
   var batterySavingMode = true
