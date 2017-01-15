@@ -23,7 +23,7 @@ class ToxService extends Service {
 
   private val connectionCheckInterval = 10000 // 10000 //in ms
 
-  private val reconnectionIntervalSeconds = 120 // 60
+  private val reconnectionIntervalSeconds = 20 // 60
 
   // 2 minutes in milliseconds
   private val BATTERY_SAVING_DELAY = 2 * 60 * 1000
@@ -97,7 +97,6 @@ class ToxService extends Service {
         System.out.println("ToxService:" + "connectionCheckInterval = " + connectionCheckInterval)
 
         val am: AlarmManager = getSystemService(Context.ALARM_SERVICE).asInstanceOf[AlarmManager]
-        val ft_secs = 10
 
         // --------------- main tox loop ---------------
         // --------------- main tox loop ---------------
@@ -116,8 +115,8 @@ class ToxService extends Service {
                 if (loops > NORMAL_LOOPS) {
                   if (isConnectedNow) {
                     if (!State.transfers.isTransferring) {
-                      if (!State.lastFileTransferActionInTheLast(ft_secs)) {
-                        if (!State.lastIncomingMessageActionInTheLast(ft_secs)) {
+                      if (!State.lastFileTransferActionInTheLast(State.noBatterySavingWithActionWithinLastXSeconds)) {
+                        if (!State.lastIncomingMessageActionInTheLast(State.noBatterySavingWithActionWithinLastXSeconds)) {
                           loops = 0
                           try {
                             System.out.println("ToxService:" + "set all friends as OFFLINE")
@@ -143,11 +142,11 @@ class ToxService extends Service {
                           }
                         }
                         else {
-                          System.out.println("ToxService:" + "incoming messages in the last " + ft_secs + " seconds")
+                          System.out.println("ToxService:" + "incoming messages in the last " + State.noBatterySavingWithActionWithinLastXSeconds + " seconds")
                         }
                       }
                       else {
-                        System.out.println("ToxService:" + "active filetransfers in the last " + ft_secs + " seconds")
+                        System.out.println("ToxService:" + "active filetransfers in the last " + State.noBatterySavingWithActionWithinLastXSeconds + " seconds")
                       }
                     }
                     else {

@@ -28,6 +28,7 @@ object State {
   var isBootstrapped: Boolean = false
   var lastFileTransferAction: Long = -1
   var lastIncomingMessageAction: Long = -1
+  val noBatterySavingWithActionWithinLastXSeconds = 5 * 60 // 5min
 
   var serviceThreadMain: Thread = null
 
@@ -38,23 +39,23 @@ object State {
   private var _userDb: Option[UserDB] = None
   val callManager = new CallManager()
 
-  def setLastIncomingMessageAction(): Unit ={
+  def setLastIncomingMessageAction(): Unit = {
     lastIncomingMessageAction = System.currentTimeMillis()
   }
 
-  def lastIncomingMessageActionInTheLast(seconds: Long): Boolean ={
+  def lastIncomingMessageActionInTheLast(seconds: Long): Boolean = {
     ((lastIncomingMessageAction + seconds) > System.currentTimeMillis())
   }
 
-  def setLastFileTransferAction(): Unit ={
+  def setLastFileTransferAction(): Unit = {
     lastFileTransferAction = System.currentTimeMillis()
   }
 
-  def lastFileTransferActionInTheLast(seconds: Long): Boolean ={
+  def lastFileTransferActionInTheLast(seconds: Long): Boolean = {
     ((lastFileTransferAction + seconds) > System.currentTimeMillis())
   }
 
-  def getAutoAcceptFt() : Boolean = {
+  def getAutoAcceptFt(): Boolean = {
     autoAcceptFt
   }
 
@@ -62,7 +63,7 @@ object State {
     autoAcceptFt = b
   }
 
-  def getBatterySavingMode() : Boolean = {
+  def getBatterySavingMode(): Boolean = {
     batterySavingMode
   }
 
