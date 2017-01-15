@@ -43,7 +43,7 @@ object State {
   }
 
   def lastIncomingMessageActionInTheLast(seconds: Long): Boolean ={
-    ((lastIncomingMessageAction + seconds) < System.currentTimeMillis())
+    ((lastIncomingMessageAction + seconds) > System.currentTimeMillis())
   }
 
   def setLastFileTransferAction(): Unit ={
@@ -51,7 +51,7 @@ object State {
   }
 
   def lastFileTransferActionInTheLast(seconds: Long): Boolean ={
-    ((lastFileTransferAction + seconds) < System.currentTimeMillis())
+    ((lastFileTransferAction + seconds) > System.currentTimeMillis())
   }
 
   def getAutoAcceptFt() : Boolean = {
