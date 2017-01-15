@@ -200,16 +200,17 @@ class FileMessageHolder(val view: View) extends GenericMessageHolder(view) with 
   def showProgressBar(): Unit = {
     System.out.println("FileMessageHolder:" + "showProgressBar")
     fileProgressBar.setMax(msg.size)
-    //zzzzz
+
     fileProgressBar.setVisibility(View.VISIBLE)
     progressLayout.setVisibility(View.VISIBLE)
-
+    fileProgressText.setVisibility(View.VISIBLE)
 
     if (progressSub == null || progressSub.isUnsubscribed) {
       AntoxLog.debug("observer subscribing", TAG)
       progressSub = Observable.interval(1000 milliseconds)
         .observeOn(AndroidMainThreadScheduler())
         .subscribe(x => {
+
           updateProgressBar()
         })
     }
@@ -329,20 +330,30 @@ class FileMessageHolder(val view: View) extends GenericMessageHolder(view) with 
 
   override def onLongClick(view: View): Boolean = {
 
+    System.out.println("FileMessageHolder:"+"onLongClick:001")
+
     var items = Array[CharSequence](context.getResources.getString(R.string.message_delete),
       context.getResources.getString(R.string.file_delete), context.getResources.getString(R.string.file_open),
       context.getResources.getString(R.string.filetransfer_cancel))
 
+    System.out.println("FileMessageHolder:"+"onLongClick:002")
+
     val key = msg.key.asInstanceOf[FriendKey]
+    System.out.println("FileMessageHolder:"+"onLongClick:003")
     val thisFt: FileTransfer = State.transfers.get(key, msg.messageId).get
+    System.out.println("FileMessageHolder:"+"onLongClick:004")
     System.out.println("FileMessageHolder:" + "thisFt=" + thisFt)
     if (thisFt != null) {
+      System.out.println("FileMessageHolder:"+"onLongClick:004.a")
+
       if ((thisFt.status == FileStatus.IN_PROGRESS) || (thisFt.status == FileStatus.PAUSED)) {
         items = Array[CharSequence](context.getResources.getString(R.string.message_delete),
           context.getResources.getString(R.string.file_delete), context.getResources.getString(R.string.file_open),
           context.getResources.getString(R.string.filetransfer_cancel))
       }
     }
+
+    System.out.println("FileMessageHolder:"+"onLongClick:005")
 
     new AlertDialog.Builder(context).setCancelable(true).setItems(items, new DialogInterface.OnClickListener() {
 
