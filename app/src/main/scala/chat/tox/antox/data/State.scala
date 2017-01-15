@@ -24,7 +24,12 @@ object State {
   val activeKeySubscription = activeKey.subscribe(x => State.setActiveKey(x))
   val typing = BehaviorSubject[Boolean](false)
   var autoAcceptFt: Boolean = false
-  var batterySavingMode = true
+  var batterySavingMode: Boolean = true
+  var isBootstrapped: Boolean = false
+  var lastFileTransferAction: Long = -1
+  var lastIncomingMessageAction: Long = -1
+
+  var serviceThreadMain: Thread = null
 
 
   val transfers: FileTransferManager = new FileTransferManager()
@@ -32,6 +37,22 @@ object State {
   var db: AntoxDB = _
   private var _userDb: Option[UserDB] = None
   val callManager = new CallManager()
+
+  def setLastIncomingMessageAction(): Unit ={
+    lastIncomingMessageAction = System.currentTimeMillis()
+  }
+
+  def lastIncomingMessageActionInTheLast(seconds: Long): Boolean ={
+    ((lastIncomingMessageAction + seconds) < System.currentTimeMillis())
+  }
+
+  def setLastFileTransferAction(): Unit ={
+    lastFileTransferAction = System.currentTimeMillis()
+  }
+
+  def lastFileTransferActionInTheLast(seconds: Long): Boolean ={
+    ((lastFileTransferAction + seconds) < System.currentTimeMillis())
+  }
 
   def getAutoAcceptFt() : Boolean = {
     autoAcceptFt

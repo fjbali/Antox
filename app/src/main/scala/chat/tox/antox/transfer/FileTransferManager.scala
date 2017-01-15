@@ -21,7 +21,14 @@ class FileTransferManager extends Intervals {
   private var _transfers: Map[Long, FileTransfer] = Map[Long, FileTransfer]()
   private var _keyAndFileNumberToId: Map[(ContactKey, Integer), Long] = Map[(ContactKey, Integer), Long]()
 
-  def isTransferring: Boolean = _transfers.exists(_._2.status == FileStatus.IN_PROGRESS)
+  def isTransferring: Boolean = {
+    val ret: Boolean = _transfers.exists(_._2.status == FileStatus.IN_PROGRESS)
+    if (ret)
+      {
+        State.lastFileTransferAction = System.currentTimeMillis()
+      }
+    ret
+  }
 
   override def interval: Int = {
     if (isTransferring) {
@@ -245,6 +252,7 @@ class FileTransferManager extends Intervals {
         t.status = FileStatus.FINISHED
         State.db.fileTransferFinished(key, fileNumber)
         State.db.clearFileNumber(key, fileNumber)
+        State.setLastFileTransferAction()
         if (t.fileKind == FileKind.AVATAR) {
           if (t.sending) {
             onSelfAvatarSendFinished(key, context)

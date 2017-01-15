@@ -1,14 +1,14 @@
 
 package chat.tox.antox.tox
 
-import android.app.Service
-import android.content.Intent
-import android.os.IBinder
+import android.app.{AlarmManager, PendingIntent, Service}
+import android.content.{Context, Intent}
+import android.os.{Build, IBinder}
 import android.preference.PreferenceManager
 import chat.tox.antox.av.CallService
 import chat.tox.antox.callbacks.{AntoxOnSelfConnectionStatusCallback, ToxCallbackListener, ToxavCallbackListener}
 import chat.tox.antox.data.State
-import chat.tox.antox.utils.{AntoxLog, Options}
+import chat.tox.antox.utils.AntoxLog
 import im.tox.tox4j.core.enums.ToxConnection
 import rx.lang.scala.schedulers.AndroidMainThreadScheduler
 import rx.lang.scala.{Observable, Subscription}
@@ -17,7 +17,7 @@ import scala.concurrent.duration._
 
 class ToxService extends Service {
 
-  private var serviceThread: Thread = _
+  var serviceThread: Thread = _
 
   private var keepRunning: Boolean = true
 
@@ -34,6 +34,9 @@ class ToxService extends Service {
   private var callService: CallService = _
 
   override def onCreate() {
+
+    System.out.println("ToxService:" + "onCreate")
+
     if (!ToxSingleton.isInited) {
       ToxSingleton.initTox(getApplicationContext)
       AntoxLog.debug("Initting ToxSingleton")
@@ -74,7 +77,7 @@ class ToxService extends Service {
                   ToxSingleton.bootstrap(getApplicationContext).subscribe()
                 })
               isConnectedNow = false
-              System.out.println("ToxService:" + "Tox disconnected. Scheduled reconnection every "+ reconnectionIntervalSeconds+ " seconds")
+              System.out.println("ToxService:" + "Tox disconnected. Scheduled reconnection every " + reconnectionIntervalSeconds + " seconds")
               AntoxLog.debug(s"Tox disconnected. Scheduled reconnection every $reconnectionIntervalSeconds seconds")
             }
           })
@@ -93,6 +96,9 @@ class ToxService extends Service {
         System.out.println("ToxService:" + "toxCoreIterationRatio = " + toxCoreIterationRatio)
         System.out.println("ToxService:" + "connectionCheckInterval = " + connectionCheckInterval)
 
+        val am: AlarmManager = getSystemService(Context.ALARM_SERVICE).asInstanceOf[AlarmManager]
+        val ft_secs = 10
+
         // --------------- main tox loop ---------------
         // --------------- main tox loop ---------------
         // --------------- main tox loop ---------------
@@ -110,22 +116,44 @@ class ToxService extends Service {
                 if (loops > NORMAL_LOOPS) {
                   if (isConnectedNow) {
                     if (!State.transfers.isTransferring) {
-                      loops = 0
-                      try {
-                        System.out.println("ToxService:" + "set all friends as OFFLINE")
-                        val antoxDb = State.db
-                        antoxDb.setAllOffline()
+                      if (!State.lastFileTransferActionInTheLast(ft_secs)) {
+                        if (!State.lastIncomingMessageActionInTheLast(ft_secs)) {
+                          loops = 0
+                          try {
+                            System.out.println("ToxService:" + "set all friends as OFFLINE")
+                            val antoxDb = State.db
+                            antoxDb.setAllOffline()
 
-                        System.out.println("ToxService:" + "batterysavings=true will sleep for " + BATTERY_SAVING_DELAY + " ms")
-                        Thread.sleep(BATTERY_SAVING_DELAY)
-                      } catch {
-                        case e: Exception =>
+                            // Android Doze will keep the Thread asleep on some phones ------
+                            val intent: Intent = new Intent()
+                            intent.setAction("chat.tox.antox.TOXSERVICE_ALARM")
+                            System.out.println("ToxService:" + "intent=" + intent)
+                            val pendingIntent = PendingIntent.getBroadcast(getApplicationContext, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+                            System.out.println("ToxService:" + "pendingIntent=" + pendingIntent)
+                            if (Build.VERSION.SDK_INT >= 23) {
+                              am.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + BATTERY_SAVING_DELAY + 1000, pendingIntent);
+                            }
+                            // Android Doze will keep the Thread asleep on some phones ------
+
+                            System.out.println("ToxService:" + "batterysavings=true will sleep for " + BATTERY_SAVING_DELAY + " ms")
+                            Thread.sleep(BATTERY_SAVING_DELAY)
+                          } catch {
+                            case e: Exception =>
+                              System.out.println("ToxService:" + "Thread as woken up by force")
+                          }
+                        }
+                        else {
+                          System.out.println("ToxService:" + "incoming messages in the last " + ft_secs + " seconds")
+                        }
+                      }
+                      else {
+                        System.out.println("ToxService:" + "active filetransfers in the last " + ft_secs + " seconds")
                       }
                     }
-                    else
-                      {
-                        System.out.println("ToxService:" + "active filetransfers ...")
-                      }
+                    else {
+                      System.out.println("ToxService:" + "active filetransfers ...")
+                    }
+
                   }
                   else {
                     System.out.println("ToxService:" + "batterysavings=true, want to go to sleep but not connected yet ...")
@@ -159,7 +187,11 @@ class ToxService extends Service {
     }
 
     serviceThread = new Thread(start)
+    State.serviceThreadMain = serviceThread
     serviceThread.start()
+
+    System.out.println("ToxService:" + "serviceThread started")
+
   }
 
   override def onBind(intent: Intent): IBinder = null
