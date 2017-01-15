@@ -116,6 +116,7 @@ class ChatMessagesAdapter(context: Context, data: util.ArrayList[Message]) exten
             //FIXME this should be "Failed" - fix the DB bug
             // TODO: zoff
             fileHolder.setProgressText(R.string.file_finished)
+            fileHolder.hideCancelButton()
           }
         } else {
           if (msg.messageId != -1) {
