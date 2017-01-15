@@ -27,8 +27,8 @@ class ToxService extends Service {
 
   // 2 minutes in milliseconds
   private val BATTERY_SAVING_DELAY = 2 * 60 * 1000
-  // how many normal loops to run in battery saving mode [0.5 secs now per loop]
-  private val NORMAL_LOOPS = 120 * 2
+  // how many normal loops to run in battery saving mode [1 secs now per loop]
+  private val NORMAL_LOOPS = 120 * 1
   var isConnectedNow = false
 
   private var callService: CallService = _
@@ -82,7 +82,7 @@ class ToxService extends Service {
         var loops = 0
         var ticks = 0
         // val toxAv_interval_longer = ToxSingleton.toxAv.interval * 20
-        val toxAv_interval_longer = 500 // 1 secs
+        val toxAv_interval_longer = 1000 // 1 secs
         System.out.println("ToxService:div 1")
         // val toxCoreIterationRatio = Math.ceil(ToxSingleton.tox.interval / toxAv_interval_longer).toInt
         val toxCoreIterationRatio = 1
@@ -105,13 +105,17 @@ class ToxService extends Service {
             }
           } else {
             try {
-              if (Options.batterySavingMode) {
+              if (State.getBatterySavingMode()) {
                 loops = loops + 1
                 if (loops > NORMAL_LOOPS) {
                   if (isConnectedNow) {
                     if (!State.transfers.isTransferring) {
                       loops = 0
                       try {
+                        System.out.println("ToxService:" + "set all friends as OFFLINE")
+                        val antoxDb = State.db
+                        antoxDb.setAllOffline()
+
                         System.out.println("ToxService:" + "batterysavings=true will sleep for " + BATTERY_SAVING_DELAY + " ms")
                         Thread.sleep(BATTERY_SAVING_DELAY)
                       } catch {
@@ -130,10 +134,10 @@ class ToxService extends Service {
               }
 
               if (ticks % toxCoreIterationRatio == 0) {
-                System.out.println("ToxService:" + "ToxSingleton.tox.iterate")
+                // System.out.println("ToxService:" + "ToxSingleton.tox.iterate")
                 ToxSingleton.tox.iterate(toxCallbackListener)
               }
-              System.out.println("ToxService:" + "ToxSingleton *+ toxAv +* iterate")
+              // System.out.println("ToxService:" + "ToxSingleton *+ toxAv +* iterate")
               ToxSingleton.toxAv.iterate(toxAvCallbackListener)
 
               val time = toxAv_interval_longer

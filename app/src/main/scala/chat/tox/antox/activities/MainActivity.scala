@@ -74,6 +74,7 @@ class MainActivity extends AppCompatActivity {
     Options.videoCallStartWithNoVideo = preferences.getBoolean("videocallstartwithnovideo", false)
     // System.out.println("load videocallstartwithnovideo options : "+Options.videoCallStartWithNoVideo);
 
+    State.setBatterySavingMode(preferences.getBoolean("batterysavingmode", false))
   }
 
   def onClickAdd(v: View) {

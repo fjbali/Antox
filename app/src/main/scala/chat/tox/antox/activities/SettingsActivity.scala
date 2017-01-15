@@ -143,6 +143,18 @@ class SettingsActivity extends BetterPreferenceActivity with Preference.OnPrefer
       State.setAutoAcceptFt(false)
     }
 
+    if (sharedPreferences.getBoolean("batterysavingmode", false) == true)
+    {
+      // System.out.println("set batterysavingmode = true");
+      State.setBatterySavingMode(true)
+    }
+    else
+    {
+      // System.out.println("set batterysavingmode = false");
+      State.setBatterySavingMode(false)
+    }
+
+
     if (sharedPreferences.getBoolean("videocallstartwithnovideo", false) == true)
     {
       // System.out.println("set videocallstartwithnovideo = true");

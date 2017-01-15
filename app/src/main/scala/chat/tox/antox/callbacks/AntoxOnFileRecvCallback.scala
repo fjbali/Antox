@@ -25,6 +25,19 @@ class AntoxOnFileRecvCallback(ctx: Context) {
         filename.toString
       }
 
+
+    if (State.getBatterySavingMode())
+    {
+      if (kind == FileKind.AVATAR)
+      {
+        // cancel all incoming Avatar FTs in battery saving mode
+        System.out.println("AntoxOnFileRecvCallback:"+ "cancel incoming avatar in battery saving mode")
+        ToxSingleton.tox.fileControl(friendInfo.key, fileNumber, ToxFileControl.CANCEL)
+        return
+      }
+    }
+
+
     if (kind == FileKind.AVATAR) {
       if (fileSize > Constants.MAX_AVATAR_SIZE) {
         return

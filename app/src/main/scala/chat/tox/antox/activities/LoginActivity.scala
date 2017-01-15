@@ -46,6 +46,8 @@ class LoginActivity extends AppCompatActivity with AdapterView.OnItemSelectedLis
     Options.videoCallStartWithNoVideo = preferences.getBoolean("videocallstartwithnovideo", false)
     // System.out.println("load videocallstartwithnovideo options : "+Options.videoCallStartWithNoVideo);
 
+    State.setBatterySavingMode(preferences.getBoolean("batterysavingmode", false))
+
     // if the user is starting the app for the first
     // time, go directly to the register account screen
     if (userDb.numUsers() == 0) {

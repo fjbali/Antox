@@ -37,7 +37,7 @@ class FileTransferManager extends Intervals {
   }
 
   def remove(id: Long): Unit = {
-    System.out.println("FileTransferManager:" + "remove id="+id)
+    System.out.println("FileTransferManager:" + "remove id=" + id)
     val mTransfer = this.get(id)
     mTransfer match {
       case Some(t) =>
@@ -237,7 +237,7 @@ class FileTransferManager extends Intervals {
 
   def fileFinished(key: ContactKey, fileNumber: Integer, context: Context) {
     AntoxLog.debug("fileFinished", TAG)
-    System.out.println("FileTransferManager:" + "fileFinished filenum="+fileNumber)
+    System.out.println("FileTransferManager:" + "fileFinished filenum=" + fileNumber)
 
     val transfer = State.transfers.get(key, fileNumber)
     transfer match {
@@ -262,7 +262,7 @@ class FileTransferManager extends Intervals {
 
   def cancelFile(key: ContactKey, fileNumber: Int, context: Context) {
     AntoxLog.debug("cancelFile", TAG)
-    System.out.println("FileTransferManager:" + "cancelFile filenum="+fileNumber)
+    System.out.println("FileTransferManager:" + "cancelFile filenum=" + fileNumber)
 
     val db = State.db
     State.transfers.remove(key, fileNumber)
@@ -271,7 +271,7 @@ class FileTransferManager extends Intervals {
 
   def getProgress(id: Long): Long = {
     val mTransfer = State.transfers.get(id)
-    System.out.println("FileTransferManager:" + "getProgress id="+id)
+    System.out.println("FileTransferManager:" + "getProgress id=" + id)
 
     mTransfer match {
       case Some(t) => t.progress
@@ -281,13 +281,13 @@ class FileTransferManager extends Intervals {
 
   def fileTransferStarted(key: ContactKey, fileNumber: Integer, ctx: Context) {
     AntoxLog.debug("fileTransferStarted", TAG)
-    System.out.println("FileTransferManager:" + "fileTransferStarted filenum="+fileNumber)
+    System.out.println("FileTransferManager:" + "fileTransferStarted filenum=" + fileNumber)
 
     State.db.fileTransferStarted(key, fileNumber)
   }
 
   def pauseFile(id: Long, ctx: Context) {
-    System.out.println("FileTransferManager:" + "pauseFile id="+id)
+    System.out.println("FileTransferManager:" + "pauseFile id=" + id)
 
     AntoxLog.debug("pauseFile", TAG)
     val mTransfer = State.transfers.get(id)
@@ -300,30 +300,35 @@ class FileTransferManager extends Intervals {
   def onSelfAvatarSendFinished(sentTo: ContactKey, context: Context): Unit = {
     val db = State.db
     db.updateContactReceivedAvatar(sentTo, receivedAvatar = true)
-    updateSelfAvatar(context)
+    updateSelfAvatar(context, false)
   }
 
-  def updateSelfAvatar(context: Context): Unit = {
-    val db = State.db
-    val friendList = db.friendInfoList.toBlocking.first
+  def updateSelfAvatar(context: Context, updated: Boolean): Unit = {
 
-    friendList.filter(_.online).find(!_.receivedAvatar) match {
-      case Some(friend) =>
-        AVATAR.getAvatarFile(PreferenceManager.getDefaultSharedPreferences(context).getString("avatar", ""), context) match {
-          case Some(file) =>
-            sendFileSendRequest(file.getPath, friend.key, AVATAR,
-              fileId =
-                ToxSingleton.tox.hash(file)
-                  .map(_.getBytes)
-                  .map(ToxFileId.unsafeFromValue)
-                  .getOrElse(ToxFileId.empty),
-              context = context)
-          case None =>
-            sendFileDeleteRequest(friend.key, AVATAR, context)
-        }
+    // don't send my avatar in battery saving mode, unless we have changed the avatar
+    if ((!State.getBatterySavingMode()) || (updated)) {
+      System.out.println("updateSelfAvatar")
+      val db = State.db
+      val friendList = db.friendInfoList.toBlocking.first
 
-      case None =>
-      //avatar has been sent to all friends, do nothing
+      friendList.filter(_.online).find(!_.receivedAvatar) match {
+        case Some(friend) =>
+          AVATAR.getAvatarFile(PreferenceManager.getDefaultSharedPreferences(context).getString("avatar", ""), context) match {
+            case Some(file) =>
+              sendFileSendRequest(file.getPath, friend.key, AVATAR,
+                fileId =
+                  ToxSingleton.tox.hash(file)
+                    .map(_.getBytes)
+                    .map(ToxFileId.unsafeFromValue)
+                    .getOrElse(ToxFileId.empty),
+                context = context)
+            case None =>
+              sendFileDeleteRequest(friend.key, AVATAR, context)
+          }
+
+        case None =>
+        //avatar has been sent to all friends, do nothing
+      }
     }
   }
 }

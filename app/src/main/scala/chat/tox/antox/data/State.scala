@@ -24,6 +24,8 @@ object State {
   val activeKeySubscription = activeKey.subscribe(x => State.setActiveKey(x))
   val typing = BehaviorSubject[Boolean](false)
   var autoAcceptFt: Boolean = false
+  var batterySavingMode = true
+
 
   val transfers: FileTransferManager = new FileTransferManager()
 
@@ -37,6 +39,14 @@ object State {
 
   def setAutoAcceptFt(b: Boolean) = {
     autoAcceptFt = b
+  }
+
+  def getBatterySavingMode() : Boolean = {
+    batterySavingMode
+  }
+
+  def setBatterySavingMode(b: Boolean) = {
+    batterySavingMode = b
   }
 
   def userDb(context: Context): UserDB = {
