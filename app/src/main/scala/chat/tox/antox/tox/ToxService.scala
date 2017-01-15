@@ -150,7 +150,7 @@ class ToxService extends Service {
                       }
                     }
                     else {
-                      System.out.println("ToxService:" + "active filetransfers ...")
+                      // System.out.println("ToxService:" + "active filetransfers ...")
                     }
 
                   }
