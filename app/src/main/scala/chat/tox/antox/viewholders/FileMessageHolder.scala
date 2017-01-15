@@ -8,15 +8,17 @@ import android.graphics.{Color, PorterDuff}
 import android.net.Uri
 import android.os.Environment
 import android.text.format.Formatter
-import android.view.{MotionEvent, View}
 import android.view.View.{OnClickListener, OnLongClickListener, OnTouchListener}
-import android.webkit.MimeTypeMap
+import android.view.{MotionEvent, View}
 import android.webkit.MimeTypeMap._
 import android.widget._
 import chat.tox.antox.R
 import chat.tox.antox.data.State
+import chat.tox.antox.tox.ToxSingleton
+import chat.tox.antox.transfer.{FileStatus, FileTransfer}
 import chat.tox.antox.utils.{AntoxLog, BitmapManager, Constants}
 import chat.tox.antox.wrapper.FriendKey
+import im.tox.tox4j.core.enums.ToxFileControl
 import org.scaloid.common.LoggerTag
 import rx.lang.scala.schedulers.{AndroidMainThreadScheduler, IOScheduler}
 import rx.lang.scala.{Observable, Subscription}
@@ -56,17 +58,15 @@ class FileMessageHolder(val view: View) extends GenericMessageHolder(view) with 
   def setImage(file: File, isImage: Boolean): Unit = {
 
 
-    try
-    {
-      System.out.println("imageMessage:"+file.getName.substring(0,Math.min(40, file.getName.length()))+" Enter");
+    try {
+      System.out.println("imageMessage:" + file.getName.substring(0, Math.min(40, file.getName.length())) + " Enter");
     }
-    catch
-      {
-        case e: Exception => {
-          e.printStackTrace()
-          System.out.println("imageMessage:"+file.getName+" Enter");
-        }
+    catch {
+      case e: Exception => {
+        e.printStackTrace()
+        System.out.println("imageMessage:" + file.getName + " Enter");
       }
+    }
 
     this.file = file
 
@@ -86,7 +86,7 @@ class FileMessageHolder(val view: View) extends GenericMessageHolder(view) with 
       imageLoading.setVisibility(View.VISIBLE)
 
       imageLoadingSub = Some(BitmapManager.load(file, isAvatar = false).subscribe(image => {
-        System.out.println("imageMessage:"+file.getName+" setImage="+image);
+        System.out.println("imageMessage:" + file.getName + " setImage=" + image);
         imageLoading.setVisibility(View.GONE)
         imageMessage.setImageBitmap(image)
       }))
@@ -95,7 +95,7 @@ class FileMessageHolder(val view: View) extends GenericMessageHolder(view) with 
       imageLoading.setVisibility(View.GONE)
       imageMessage.setScaleType(ImageView.ScaleType.CENTER_INSIDE)
       imageMessage.setImageResource(R.drawable.ic_action_attachment_2)
-      System.out.println("imageMessage:"+file.getName+" setImage=ic_action_attachment_2");
+      System.out.println("imageMessage:" + file.getName + " setImage=ic_action_attachment_2");
     }
 
     imageMessage.setOnClickListener(this)
@@ -198,13 +198,16 @@ class FileMessageHolder(val view: View) extends GenericMessageHolder(view) with 
   }
 
   def showProgressBar(): Unit = {
+    System.out.println("FileMessageHolder:" + "showProgressBar")
     fileProgressBar.setMax(msg.size)
+    //zzzzz
     fileProgressBar.setVisibility(View.VISIBLE)
     progressLayout.setVisibility(View.VISIBLE)
 
+
     if (progressSub == null || progressSub.isUnsubscribed) {
       AntoxLog.debug("observer subscribing", TAG)
-      progressSub = Observable.interval(500 milliseconds)
+      progressSub = Observable.interval(1000 milliseconds)
         .observeOn(AndroidMainThreadScheduler())
         .subscribe(x => {
           updateProgressBar()
@@ -216,7 +219,7 @@ class FileMessageHolder(val view: View) extends GenericMessageHolder(view) with 
   }
 
   def updateProgressBar(): Unit = {
-    val updateRate = 500
+    val updateRate = 100
     val mProgress = State.transfers.getProgressSinceXAgo(msg.id, updateRate)
     val bytesPerSecond = mProgress match {
       case Some(p) => ((p._1 * 1000) / p._2).toInt
@@ -326,10 +329,21 @@ class FileMessageHolder(val view: View) extends GenericMessageHolder(view) with 
 
   override def onLongClick(view: View): Boolean = {
 
-    // add selection to cancel filetransfer??
+    var items = Array[CharSequence](context.getResources.getString(R.string.message_delete),
+      context.getResources.getString(R.string.file_delete), context.getResources.getString(R.string.file_open),
+      context.getResources.getString(R.string.filetransfer_cancel))
 
-    val items = Array[CharSequence](context.getResources.getString(R.string.message_delete),
-      context.getResources.getString(R.string.file_delete), context.getResources.getString(R.string.file_open))
+    val key = msg.key.asInstanceOf[FriendKey]
+    val thisFt: FileTransfer = State.transfers.get(key, msg.messageId).get
+    System.out.println("FileMessageHolder:" + "thisFt=" + thisFt)
+    if (thisFt != null) {
+      if ((thisFt.status == FileStatus.IN_PROGRESS) || (thisFt.status == FileStatus.PAUSED)) {
+        items = Array[CharSequence](context.getResources.getString(R.string.message_delete),
+          context.getResources.getString(R.string.file_delete), context.getResources.getString(R.string.file_open),
+          context.getResources.getString(R.string.filetransfer_cancel))
+      }
+    }
+
     new AlertDialog.Builder(context).setCancelable(true).setItems(items, new DialogInterface.OnClickListener() {
 
       def onClick(dialog: DialogInterface, index: Int): Unit = index match {
@@ -387,9 +401,21 @@ class FileMessageHolder(val view: View) extends GenericMessageHolder(view) with 
             }
             subscriber.onCompleted()
           }).subscribeOn(IOScheduler()).subscribe()
+        case 3 =>
+          Observable[Boolean](subscriber => {
+            val db = State.db
+            System.out.println("FileMessageHolder:" + "cancel FT:1")
+            ToxSingleton.tox.fileControl(key, msg.messageId, ToxFileControl.CANCEL)
+            System.out.println("FileMessageHolder:" + "cancel FT:2")
+            State.transfers.cancelFile(key, msg.messageId, context)
+            System.out.println("FileMessageHolder:" + "cancel FT:3")
+            subscriber.onCompleted()
+          }).subscribeOn(IOScheduler()).subscribe()
       }
-    }).create().show()
+    }
+    ).create().show()
 
     true
   }
+
 }

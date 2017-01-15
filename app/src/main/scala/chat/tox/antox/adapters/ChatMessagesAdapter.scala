@@ -112,7 +112,9 @@ class ChatMessagesAdapter(context: Context, data: util.ArrayList[Message]) exten
           if (msg.messageId != -1) {
             fileHolder.showProgressBar()
           } else {
+            System.out.println("fileHolder.showProgressBar")
             //FIXME this should be "Failed" - fix the DB bug
+            // TODO: zoff
             fileHolder.setProgressText(R.string.file_finished)
           }
         } else {

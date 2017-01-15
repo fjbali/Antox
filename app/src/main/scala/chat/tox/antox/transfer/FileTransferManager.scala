@@ -279,7 +279,6 @@ class FileTransferManager extends Intervals {
 
   def getProgress(id: Long): Long = {
     val mTransfer = State.transfers.get(id)
-    System.out.println("FileTransferManager:" + "getProgress id=" + id)
 
     mTransfer match {
       case Some(t) => t.progress
