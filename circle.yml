@@ -261,7 +261,7 @@ dependencies:
     - ./gradlew assembleDebug --stacktrace --info --no-daemon
     - ls -al app/build/outputs/apk/ ; exit 0
 
-# ----------- make zipfile for android studio project -----------
+# ----------- make zipfile for android studio project [and for download-dependencies.bat] -----------
     - mkdir -p ~/and_stud_prj/app/libs/
     - cp -av app/libs/tox*jar ~/and_stud_prj/app/libs/
     - mkdir -p ~/and_stud_prj/app/src/main/java/org/libsodium/
@@ -269,7 +269,16 @@ dependencies:
     - mkdir -p ~/and_stud_prj/app/src/main/jniLibs/
     - cp -av app/src/main/jniLibs/* ~/and_stud_prj/app/src/main/jniLibs/
     - cd ~/and_stud_prj/ ; zip -r $CIRCLE_ARTIFACTS/and_stud_prj.zip *
-# ----------- make zipfile for android studio project -----------
+    - rm -Rf ~/and_stud_prj/
+# ----------- make zipfile for android studio project [and for download-dependencies.bat] -----------
+
+# ----------- make zipfile for builds [for download-dependencies.sh] -----------
+    - mkdir -p ~/and_stud_prj/app/libs/
+    - cp -av app/libs/tox*jar ~/and_stud_prj/app/libs/
+    - mkdir -p ~/and_stud_prj/app/src/main/jniLibs/
+    - cp -av app/src/main/jniLibs/* ~/and_stud_prj/app/src/main/jniLibs/
+    - cd ~/and_stud_prj/ ; zip -r $CIRCLE_ARTIFACTS/supplement.zip *
+# ----------- make zipfile for builds [for download-dependencies.sh] -----------
 
     - zip -d app/build/outputs/apk/app-debug-unaligned.apk META-INF/\*     # remove signature !!
     - cp -av app/build/outputs/apk/app-debug-unaligned.apk ~/app.apk ;
