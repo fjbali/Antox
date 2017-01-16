@@ -1,6 +1,5 @@
 language: android
 jdk:
-#  - openjdk7
   - oraclejdk8
 scala:
    - 2.11.8
@@ -25,4 +24,4 @@ script:
    - chmod a+rx ./download-dependencies.sh
    - ./download-dependencies.sh
    - ./gradlew build -x lint; echo dummy # need return code 0 here
-   - ./gradlew build --stacktrace --info --no-daemon
+   - ./gradlew assembleDebug --stacktrace --info --no-daemon
