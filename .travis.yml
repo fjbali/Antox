@@ -26,4 +26,4 @@ script:
    - chmod a+rx ./download-dependencies.sh
    - ./download-dependencies.sh
    - travis_wait 30 ./gradlew build -x lint; echo dummy # need return code 0 here
-   - travis_wait 30 ./gradlew assemble --stacktrace --info --no-daemon
+   - travis_wait 30 ./gradlew assemble --stacktrace --info
