@@ -13,8 +13,7 @@ rm -f app/src/main/jniLibs/arm64-v8a/libkaliumjni.so
 
 cd ${0%/*}
 mkdir -p app/libs
-rm -f app/libs/tox4j_2.11.jar
-# wget https://build.tox.chat/job/tox4j_build_android_armel_release/lastSuccessfulBuild/artifact/artifacts/tox4j_2.11-0.1-SNAPSHOT.jar -O app/libs/tox4j_2.11.jar
+rm -f app/libs/tox4j*.jar
 
 REPOUSER="zoff99"
 REPO="Antox"
