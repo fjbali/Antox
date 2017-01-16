@@ -1,5 +1,5 @@
 @echo off
-echo Started...
+echo not working yet
 
 mkdir app\src\main\jniLibs\armeabi
 mkdir app\src\main\jniLibs\x86
