@@ -87,7 +87,10 @@ dependencies:
 
     - pwd ; ls -al
 
-# ------ remove old libs and jar (if they exist) --------
+# ------ remove old libs and jar (if they exist) and create missing dirs --------
+    - mkdir -p app/libs/
+    - mkdir -p app/src/main/jniLibs/armeabi/
+    - mkdir -p app/src/main/jniLibs/x86/
     - rm -fv app/src/main/jniLibs/armeabi/libtox4j.so
     - rm -fv app/src/main/jniLibs/x86/libtox4j.so
     - rm -fv app/src/main/jniLibs/arm64-v8a/libtox4j.so
@@ -95,7 +98,7 @@ dependencies:
     - rm -fv app/src/main/jniLibs/x86/libkaliumjni.so
     - rm -fv app/src/main/jniLibs/arm64-v8a/libkaliumjni.so
     - rm -fv app/libs/tox4j*.jar
-# ------ remove old libs and jar (if they exist) --------
+# ------ remove old libs and jar (if they exist) and create missing dirs --------
 
 # ------ build libsodiumjni.so ------
     - sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys F76221572C52609D
