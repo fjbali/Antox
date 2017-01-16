@@ -12,4 +12,6 @@ android:
     - extra-google-m2repository
 
 script:
+   - chmod a+rx ./download-dependencies.sh
+   - ./download-dependencies.sh
    - ./gradlew build
