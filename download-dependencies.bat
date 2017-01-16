@@ -1,5 +1,4 @@
 @echo off
-echo not working yet
 
 mkdir app\src\main\jniLibs\armeabi
 mkdir app\src\main\jniLibs\x86
@@ -18,8 +17,13 @@ mkdir app\libs
 DEL /F /Q app\libs\tox4j*.jar
 echo Removed old version
 echo Downloading latest version ...
-powershell -Command "(New-Object Net.WebClient).DownloadFile('https://build.tox.chat/job/tox4j_build_android_armel_release/lastSuccessfulBuild/artifact/artifacts/tox4j_2.11-0.1-SNAPSHOT.jar', 'app\libs\tox4j_2.11.jar')"
+REM REPOUSER="zoff99"
+REM REPO="Antox"
+REM BRANCH="z_new_source"
+powershell -Command "(New-Object Net.WebClient).DownloadFile('https://circleci.com/api/v1/project/zoff99/Antox/latest/artifacts/0/$CIRCLE_ARTIFACTS/and_stud_prj.zip?filter=successful&branch=z_new_source', 'and_stud_prj.zip')"
 echo Downloaded.
+echo unzipping
+unzip and_stud_prj.zip
 echo ...Finished!
 pause
 @echo ON
