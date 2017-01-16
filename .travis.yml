@@ -26,5 +26,4 @@ script:
    - chmod a+rx ./download-dependencies.sh
    - ./download-dependencies.sh
    - travis_wait 40 ./gradlew build -x lint --stacktrace --info
-   #- travis_wait 30 ./gradlew assemble --stacktrace --info
-   - find . -name '*.apk' -exec ls -al {} \; ; echo dummy # need return code 0 here
+   - find . -name '*.apk' -exec ls -al {} \;
