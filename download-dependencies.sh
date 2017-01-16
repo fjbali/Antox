@@ -20,6 +20,5 @@ REPO="Antox"
 BRANCH="z_new_source"
 
 wget 'https://circleci.com/api/v1/project/'"$REPOUSER"'/'"$REPO"'/latest/artifacts/0/$CIRCLE_ARTIFACTS/supplement.zip?filter=successful&branch='"$BRANCH" -O ./supplement.zip
-unzip ./suppl.zip
+unzip ./supplement.zip
 
-exit 0
