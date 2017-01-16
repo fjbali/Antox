@@ -1,6 +1,6 @@
 language: android
 jdk:
-  - openjdk7
+#  - openjdk7
   - oraclejdk8
 scala:
    - 2.11.8
@@ -9,10 +9,16 @@ android:
     - tools # to get the new `repository-11.xml`
     - tools # see https://github.com/travis-ci/travis-ci/issues/6040#issuecomment-219367943)
     - platform-tools
+    - build-tools-23.0.3
+    - build-tools-24.0.2
     - build-tools-25.0.2
+    - android-21
+    - android-23
+    - android-24
     - android-25
     - extra-android-m2repository
     - extra-google-m2repository
+    - extra-android-support
 
 script:
    - rm -fv app/libs/tox4j*.jar # make sure dependencies are really downloaded and not old ones from repo get used
