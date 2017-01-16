@@ -14,4 +14,5 @@ android:
 script:
    - chmod a+rx ./download-dependencies.sh
    - ./download-dependencies.sh
-   - ./gradlew build
+   - ./gradlew build -x lint; exit 0 # first build will FAIL !!
+   - ./gradlew build --stacktrace --info --no-daemon
