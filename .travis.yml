@@ -1,4 +1,7 @@
 language: android
+jdk:
+  - openjdk7
+  - oraclejdk8
 scala:
    - 2.11.8
 android:
