@@ -54,8 +54,8 @@ class SettingsActivity extends BetterPreferenceActivity with Preference.OnPrefer
     getDelegate.onCreate(savedInstanceState)
     super.onCreate(savedInstanceState)
 
-    getSupportActionBar.setDisplayHomeAsUpEnabled(true)
     ThemeManager.applyTheme(this, getSupportActionBar)
+    getSupportActionBar.setDisplayHomeAsUpEnabled(true)
 
     themeDialog = new ColorPickerDialog(this, new ColorPickerDialog.Callback {
       override def onColorSelection(index: Int, color: Int, darker: Int): Unit = {
