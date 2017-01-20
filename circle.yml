@@ -296,7 +296,7 @@ dependencies:
 # ----------- make zipfile for builds [for download-dependencies.sh] -----------
 
     - zip -d app/build/outputs/apk/app-release-unsigned.apk META-INF/\*     # remove signature !!
-    - cp -av app/build/outputs/apk/app-debug-unaligned.apk ~/app.apk ;
+    - cp -av app/build/outputs/apk/app-release-unsigned.apk ~/app.apk ;
       cd ~/ ;
       echo xxxxxxrm -f ~/.android/debug.keystore ;
       ls -al ~/.android/debug.keystore ;
