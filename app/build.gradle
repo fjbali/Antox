@@ -50,6 +50,10 @@ android {
         testApplicationId "chat.tox.antox.tests"
     }
 
+    aaptOptions {  
+        additionalParameters "--no-version-vectors"  
+    }
+
     lintOptions {
         abortOnError false
         absolutePaths false
