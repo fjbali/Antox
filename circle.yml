@@ -202,14 +202,14 @@ dependencies:
 
     # ------ debug output ----------------------
     - cp -av BuildScript.pm jvm-toxcore-c/buildscripts/
-    - sed -i -e 's#system#system2#' 00_* ;sed -i -e 's#must_system2#must_system#' 00_*
-    - sed -i -e 's#system#system2#' 01_* ;sed -i -e 's#must_system2#must_system#' 01_*
-    - sed -i -e 's#system#system2#' 02_* ;sed -i -e 's#must_system2#must_system#' 02_*
-    - sed -i -e 's#system#system2#' 03_* ;sed -i -e 's#must_system2#must_system#' 03_*
-    - sed -i -e 's#system#system2#' 04_* ;sed -i -e 's#must_system2#must_system#' 04_*
-    - sed -i -e 's#system#system2#' 05_* ;sed -i -e 's#must_system2#must_system#' 05_*
-    - sed -i -e 's#system#system2#' 06_* ;sed -i -e 's#must_system2#must_system#' 06_*
-    - sed -i -e 's#system#system2#' 07_* ;sed -i -e 's#must_system2#must_system#' 07_*
+    - sed -i -e 's#system#system2#' jvm-toxcore-c/buildscripts/00_* ;sed -i -e 's#must_system2#must_system#' jvm-toxcore-c/buildscripts/00_*
+    - sed -i -e 's#system#system2#' jvm-toxcore-c/buildscripts/01_* ;sed -i -e 's#must_system2#must_system#' jvm-toxcore-c/buildscripts/01_*
+    - sed -i -e 's#system#system2#' jvm-toxcore-c/buildscripts/02_* ;sed -i -e 's#must_system2#must_system#' jvm-toxcore-c/buildscripts/02_*
+    - sed -i -e 's#system#system2#' jvm-toxcore-c/buildscripts/03_* ;sed -i -e 's#must_system2#must_system#' jvm-toxcore-c/buildscripts/03_*
+    - sed -i -e 's#system#system2#' jvm-toxcore-c/buildscripts/04_* ;sed -i -e 's#must_system2#must_system#' jvm-toxcore-c/buildscripts/04_*
+    - sed -i -e 's#system#system2#' jvm-toxcore-c/buildscripts/05_* ;sed -i -e 's#must_system2#must_system#' jvm-toxcore-c/buildscripts/05_*
+    - sed -i -e 's#system#system2#' jvm-toxcore-c/buildscripts/06_* ;sed -i -e 's#must_system2#must_system#' jvm-toxcore-c/buildscripts/06_*
+    - sed -i -e 's#system#system2#' jvm-toxcore-c/buildscripts/07_* ;sed -i -e 's#must_system2#must_system#' jvm-toxcore-c/buildscripts/07_*
     # ------ debug output ----------------------
 
     - wget www.scala-lang.org/files/archive/scala-2.11.7.deb -O ~/scala-2.11.7.deb
