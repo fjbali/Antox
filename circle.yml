@@ -200,6 +200,18 @@ dependencies:
     - cd jvm-toxcore-c/ ; git submodule init ; exit 0
     - cd jvm-toxcore-c/ ; git submodule update ; exit 0
 
+    # ------ debug output ----------------------
+    - cp -av BuildScript.pm jvm-toxcore-c/buildscripts/
+    - sed -i -e 's#system#system2#' 00_* ;sed -i -e 's#must_system2#must_system#' 00_*
+    - sed -i -e 's#system#system2#' 01_* ;sed -i -e 's#must_system2#must_system#' 01_*
+    - sed -i -e 's#system#system2#' 02_* ;sed -i -e 's#must_system2#must_system#' 02_*
+    - sed -i -e 's#system#system2#' 03_* ;sed -i -e 's#must_system2#must_system#' 03_*
+    - sed -i -e 's#system#system2#' 04_* ;sed -i -e 's#must_system2#must_system#' 04_*
+    - sed -i -e 's#system#system2#' 05_* ;sed -i -e 's#must_system2#must_system#' 05_*
+    - sed -i -e 's#system#system2#' 06_* ;sed -i -e 's#must_system2#must_system#' 06_*
+    - sed -i -e 's#system#system2#' 07_* ;sed -i -e 's#must_system2#must_system#' 07_*
+    # ------ debug output ----------------------
+
     - wget www.scala-lang.org/files/archive/scala-2.11.7.deb -O ~/scala-2.11.7.deb
     - cd ~ ; sudo dpkg -i scala-2.11.7.deb
     - mkdir -p ~/cache
@@ -234,6 +246,11 @@ dependencies:
     - cd jvm-toxcore-c/ ; export CFLAGS=-O2 ; export CXXFLAGS=-O2 ; export CASHER_DIR=$HOME/.casher ; export CACHE_DIR=~/cache ; export TARGET=arm-linux-androideabi ; export NDK_HOME=~/android-ndk ; buildscripts/03_dependencies_target
     - cd jvm-toxcore-c/ ; export CFLAGS=-O2 ; export CXXFLAGS=-O2 ; export CASHER_DIR=$HOME/.casher ; export CACHE_DIR=~/cache ; export TARGET=arm-linux-androideabi ; export NDK_HOME=~/android-ndk ; buildscripts/04_build
 # ---- arm ----
+
+
+    # ------ debug output ----------------------
+    - cp -av /tmp/inst.log $CIRCLE_ARTIFACTS/jvm-toxcore-c_build_commands.txt
+    # ------ debug output ----------------------
 
     - md5sum $(cat /tmp/jarfile2) /home/ubuntu/.ivy2/cache/org.toktok/tox4j-api_2.11/jars/tox4j-api_2.11-0.1.2.jar ; exit 0
     - ls -al $(cat /tmp/jarfile2) /home/ubuntu/.ivy2/cache/org.toktok/tox4j-api_2.11/jars/tox4j-api_2.11-0.1.2.jar ; exit 0
