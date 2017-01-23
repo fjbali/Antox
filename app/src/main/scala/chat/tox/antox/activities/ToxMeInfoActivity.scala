@@ -26,12 +26,12 @@ class ToxMeInfoActivity extends AppCompatActivity {
     getWindow.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
 
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-      getWindow.setStatusBarColor(Color.parseColor("#202020"))
+      getWindow.setStatusBarColor(getResources.getColor(R.color.material_blue_grey_950))
     }
 
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB && getSupportActionBar != null) {
       val info = new ActivityManager.RunningTaskInfo()
-      getSupportActionBar.setBackgroundDrawable(new ColorDrawable(Color.parseColor("#24221f")))
+      getSupportActionBar.setBackgroundDrawable(new ColorDrawable(getResources.getColor(R.color.black)))
     }
 
     val toxMeWebsite = findViewById(R.id.toxme_info_website).asInstanceOf[TextView]
