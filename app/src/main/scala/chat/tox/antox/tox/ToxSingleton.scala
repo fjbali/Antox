@@ -42,7 +42,7 @@ object ToxSingleton {
 
   var dhtNodes: Array[DhtNode] = Array()
 
-  private val nodeFileName = "Nodefile.json"
+  private val nodeFileName = "nodefile.json"
 
 
   def interval: Int = {
