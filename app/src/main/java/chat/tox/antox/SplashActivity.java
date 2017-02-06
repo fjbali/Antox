@@ -35,7 +35,7 @@ public class SplashActivity extends AppCompatActivity implements EasyPermissions
         
         
         // unpack included nodes file, if not already unpacked
-        String baseDir = Context.getFilesDir();
+        String baseDir = getFilesDir();
         String fileName = State.getNodeFileNameGlobal();
         File nodesfile = new File(baseDir, fileName);
         if (!nodesfile.exists())
