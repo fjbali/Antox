@@ -32,7 +32,7 @@ object State {
   var MainToxService: ToxService = null
 
   var serviceThreadMain: Thread = null
-  val nodeFileNameGlobal: String = "nodefile.json"
+  public val nodeFileNameGlobal: String = "nodefile.json"
 
 
   val transfers: FileTransferManager = new FileTransferManager()
