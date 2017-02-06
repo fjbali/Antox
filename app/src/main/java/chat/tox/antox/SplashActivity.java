@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import chat.tox.antox.data.State;
+
 import pub.devrel.easypermissions.AppSettingsDialog;
 import pub.devrel.easypermissions.EasyPermissions;
 
@@ -26,6 +28,31 @@ public class SplashActivity extends AppCompatActivity implements EasyPermissions
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        
+        
+        // unpack included nodes file, if not already unpacked
+        String baseDir = Context.getFilesDir();
+        String fileName = State.nodeFileNameGlobal;
+        File nodesfile = new File(baseDir, fileName);
+        if (!nodesfile.exists())
+        {
+            InputStream in = getResources().openRawResource(R.raw.nodefile);
+            FileOutputStream out = new FileOutputStream(nodesfile);
+            byte[] buff = new byte[1024];
+            int read = 0;
+
+            try {
+                while ((read = in.read(buff)) > 0) {
+                    out.write(buff, 0, read);
+                }
+            } finally {
+                in.close();
+                out.close();
+            }
+        }
+        // unpack included nodes file, if not already unpacked
+        
+
         getPermissions();
     }
 
