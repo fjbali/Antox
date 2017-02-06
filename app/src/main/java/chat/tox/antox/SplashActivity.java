@@ -3,19 +3,15 @@ package chat.tox.antox;
 import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
-import java.io.File;
-import java.io.InputStream;
-import java.io.FileOutputStream;
-import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
 import java.util.List;
 
 import chat.tox.antox.data.State;
-
 import pub.devrel.easypermissions.AppSettingsDialog;
 import pub.devrel.easypermissions.EasyPermissions;
 
@@ -32,30 +28,43 @@ public class SplashActivity extends AppCompatActivity implements EasyPermissions
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        
-        
+
+
         // unpack included nodes file, if not already unpacked
         String baseDir = getFilesDir().getAbsolutePath();
         String fileName = State.getNodeFileNameGlobal();
         File nodesfile = new File(baseDir, fileName);
         if (!nodesfile.exists())
         {
-            InputStream in = getResources().openRawResource(R.raw.nodefile);
-            FileOutputStream out = new FileOutputStream(nodesfile);
-            byte[] buff = new byte[1024];
-            int read = 0;
+            try
+            {
+                InputStream in = getResources().openRawResource(R.raw.nodefile);
+                FileOutputStream out = null;
+                out = new FileOutputStream(nodesfile);
+                byte[] buff = new byte[1024];
+                int read = 0;
 
-            try {
-                while ((read = in.read(buff)) > 0) {
-                    out.write(buff, 0, read);
+                try
+                {
+                    while ((read = in.read(buff)) > 0)
+                    {
+                        out.write(buff, 0, read);
+                    }
                 }
-            } finally {
-                in.close();
-                out.close();
+                finally
+                {
+                    in.close();
+                    out.close();
+                }
             }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+
         }
         // unpack included nodes file, if not already unpacked
-        
+
 
         getPermissions();
     }
