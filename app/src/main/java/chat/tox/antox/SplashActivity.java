@@ -3,6 +3,10 @@ package chat.tox.antox;
 import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
+import java.io.File;
+import java.io.InputStream;
+import java.io.FileOutputStream;
+import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
 
