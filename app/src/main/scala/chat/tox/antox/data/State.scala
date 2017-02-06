@@ -32,7 +32,7 @@ object State {
   var MainToxService: ToxService = null
 
   var serviceThreadMain: Thread = null
-  public val nodeFileNameGlobal: String = "nodefile.json"
+  val nodeFileNameGlobal: String = "nodefile.json"
 
 
   val transfers: FileTransferManager = new FileTransferManager()
@@ -59,6 +59,10 @@ object State {
     ((lastFileTransferAction + (seconds * 1000)) > System.currentTimeMillis())
   }
 
+  def getNodeFileNameGlobal() : String = {
+    nodeFileNameGlobal
+  }
+  
   def getAutoAcceptFt(): Boolean = {
     autoAcceptFt
   }
