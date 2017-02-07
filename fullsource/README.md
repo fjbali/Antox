@@ -1,12 +1,12 @@
 Compile tox dependencies from source (including libsodiumjni)
 =
 
-**Travis:** [![Build Status](https://travis-ci.org/zoff99/Antox.png?branch=zoff99%2FAntox_v0.25.1)](https://travis-ci.org/zoff99/Antox)
-**CircleCI:** [![CircleCI](https://circleci.com/gh/zoff99/Antox/tree/zoff99%2FAntox_v0.25.1.png?style=badge)](https://circleci.com/gh/zoff99/Antox)
+**Travis:** [![Build Status](https://travis-ci.org/zoff99/Antox.png?branch=wiiam%2Fantox_0.25)](https://travis-ci.org/zoff99/Antox)
+**CircleCI:** [![CircleCI](https://circleci.com/gh/zoff99/Antox/tree/wiiam%2Fantox_0.25.png?style=badge)](https://circleci.com/gh/zoff99/Antox)
 
 =====
 
-This commit APK can be downloaded from CircleCI, [here](https://circleci.com/api/v1/project/zoff99/Antox/latest/artifacts/0/$CIRCLE_ARTIFACTS/Antox.apk?filter=successful&branch=zoff99%2FAntox_v0.25.1)
+This commit APK can be downloaded from CircleCI, [here](https://circleci.com/api/v1/project/zoff99/Antox/latest/artifacts/0/$CIRCLE_ARTIFACTS/Antox.apk?filter=successful&branch=wiiam%2Fantox_0.25)
 
 ###Compiling Antox From Source using Gradle
 - Download and install the SDK tools http://developer.android.com/sdk/index.html#Other
