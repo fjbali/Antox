@@ -22,5 +22,11 @@ BRANCH="zoff99%2FAntox_v0.25.1"
 wget 'https://circleci.com/api/v1/project/'"$REPOUSER"'/'"$REPO"'/latest/artifacts/0/$CIRCLE_ARTIFACTS/supplement.zip?filter=successful&branch='"$BRANCH" -O ./supplement.zip
 unzip -o ./supplement.zip
 
+pushd app/src/main/java/org/
+ln -sf ../../../../../libsodium-jni/src/main/java/org/libsodium
+popd
+
+sed -i -e 's#^.*com.github.joshjdevl.libsodiumjni:libsodium-jni-aar.*$##' app/build.gradle
+
 git submodule init
 git submodule update
