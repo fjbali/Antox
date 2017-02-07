@@ -47,31 +47,26 @@ dependencies:
     - git submodule sync
     - git submodule update
 
-    - sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 749D6EEC0353B12C
-    - sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys F76221572C52609D
-    - sudo bash -c 'cd /etc/apt/sources.list.d; echo "deb http://old-releases.ubuntu.com/ubuntu/ raring main restricted universe multiverse" >ia32-libs-raring.list'
-    - sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys F76221572C52609D
-    - sudo dpkg --add-architecture i386
-    
     - sudo apt-get update > /dev/null 2> /dev/null
-    - sudo apt-get install libncurses5:i386
     - sudo apt-get install xvfb > /dev/null 2> /dev/null
     - sudo apt-get install xdotool > /dev/null 2> /dev/null
     - sudo apt-get install telnet > /dev/null 2> /dev/null
     - sudo apt-get install x11-utils > /dev/null 2> /dev/null
     - sudo apt-get install xvkbd > /dev/null 2> /dev/null
     - sudo apt-get install qrencode > /dev/null 2> /dev/null
-    - sudo apt-get install p7zip-full
+
+    - sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 749D6EEC0353B12C
+    - sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys F76221572C52609D
+    - sudo apt-get update
+    - sudo bash -c 'cd /etc/apt/sources.list.d; echo "deb http://old-releases.ubuntu.com/ubuntu/ raring main restricted universe multiverse" >ia32-libs-raring.list'
+    - sudo apt-get update
     - sudo apt-get install libncurses-dev
     - sudo apt-get install lib32ncurses5-dev
-    
-    - sudo apt-get install build-essential libtool autotools-dev automake checkinstall check git yasm
-    - sudo apt-get install libopus-dev libvpx-dev pkg-config
-    - sudo apt-get install check libcv-dev libhighgui-dev libopencv-contrib-dev libsndfile1-dev libvpx-dev opam portaudio19-dev texinfo
-
 
     - mkdir -p "/home/ubuntu/.sbt/.lib/0.13.12/"
     - wget http://repo.typesafe.com/typesafe/ivy-releases/org.scala-sbt/sbt-launch/0.13.12/sbt-launch.jar -O "/home/ubuntu/.sbt/.lib/0.13.12/sbt-launch.jar"
+
+    - sudo apt-get install p7zip-full
 
     - gradle -v # display gradle version
     - echo y | android update sdk --no-ui --all --filter "tools"
@@ -118,7 +113,61 @@ dependencies:
     - rm -fv app/libs/tox4j*.jar
 # ------ remove old libs and jar (if they exist) and create missing dirs --------
 
+# ------ build libsodiumjni.so ------
+    - sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys F76221572C52609D
+    - sudo apt-get update
+    - sudo apt-get install build-essential libtool autotools-dev automake checkinstall check git yasm
+    - sudo apt-get install libopus-dev libvpx-dev pkg-config
 
+    # -- use: https://github.com/joshjdevl/libsodium-jni/commit/$_LIBSODIUMJNI_VERSION_
+    - cd libsodium-jni/ ; git fetch
+    - cd libsodium-jni/ ; git checkout "$_LIBSODIUMJNI_VERSION_"
+
+    # -- circleCI needs output or it will kill the command after 10 minutes
+    - cd libsodium-jni/ ; sed -i -e 'sxwget --quietxwget xg' dependencies-linux.sh
+    - cd libsodium-jni/ ; sed -i -e 'sxunzip -qqxunzipxg' dependencies-linux.sh
+    - cd libsodium-jni/jni/ ; sed -i -e 'sx --quietxxg' installswig.sh
+    - cd libsodium-jni/ ; sed -i -e 'sxunzip -qqxunzipxg' download-gradle.sh
+    - cd libsodium-jni/ ; sed -i -e 'sx --quietxxg' download-gradle.sh
+    - cd libsodium-jni/jni/ ; sed -i -e 'sx --quietxxg' installswig.sh
+    - cd libsodium-jni/jni/ ; sed -i -e 'sxgcc xgcc -O2 xg' compile.sh
+    #- cd libsodium-jni/ ; printf '#! /bin/bash\necho dummy' > update-android.sh ; chmod a+x update-android.sh
+    - cd libsodium-jni/ ; cat update-android.sh
+    # -- circleCI needs output or it will kill the command after 10 minutes
+
+    - cd libsodium-jni/ ; git submodule init
+    - cd libsodium-jni/ ; git submodule update
+
+# ------------- this sometimes fails and then works again, try 2 times ------------------
+    - cd libsodium-jni/ ; bash -x ./dependencies-linux.sh
+# ------------- this sometimes fails and then works again, try 2 times ------------------
+
+    # scripts don't work and need tweaking -----
+    - cd libsodium-jni/ ; sed -i -e 's#quiet install#quiet install;sed -i -e "sx--force xx" ./dist-build/android-build.sh#' build.sh
+    # scripts don't work and need tweaking -----
+    - cd libsodium-jni/ ; ./build.sh
+    - cd libsodium-jni/ ; ./build-kaliumjni.sh
+    - cd libsodium-jni/ ; ./build-libsodiumjni.sh
+    - find ~/ -name 'libsodiumjni.so' -exec ls -al {} \; ; exit 0
+    - find ~/ -name 'libsodiumjni.so' -exec file {} \; ; exit 0
+    # ---- copy libraries to Antox folder ----
+    - mkdir -p $CIRCLE_ARTIFACTS/solibs/sodiumjni/armeabi/
+    - mkdir -p $CIRCLE_ARTIFACTS/solibs/sodiumjni/armeabi-v7a/
+    - mkdir -p $CIRCLE_ARTIFACTS/solibs/sodiumjni/x86/
+
+    - /usr/local/android-ndk/toolchains/arm-linux-androideabi-4.9/prebuilt/linux-x86_64/bin/arm-linux-androideabi-strip libsodium-jni/libs/armeabi/libsodiumjni.so
+    - cp -v libsodium-jni/libs/armeabi/libsodiumjni.so $CIRCLE_ARTIFACTS/solibs/sodiumjni/armeabi/
+    
+    - /usr/local/android-ndk/toolchains/arm-linux-androideabi-4.9/prebuilt/linux-x86_64/bin/arm-linux-androideabi-strip libsodium-jni/libs/armeabi-v7a/libsodiumjni.so
+    - cp -v libsodium-jni/libs/armeabi-v7a/libsodiumjni.so $CIRCLE_ARTIFACTS/solibs/sodiumjni/armeabi-v7a/
+    
+    - /usr/local/android-ndk/toolchains/x86-4.9/prebuilt/linux-x86_64/bin/i686-linux-android-strip libsodium-jni/libs/x86/libsodiumjni.so
+    - cp -v libsodium-jni/libs/x86/libsodiumjni.so $CIRCLE_ARTIFACTS/solibs/sodiumjni/x86/
+
+    - cp -v libsodium-jni/libs/armeabi/libsodiumjni.so app/src/main/jniLibs/armeabi/
+    - cp -v libsodium-jni/libs/x86/libsodiumjni.so app/src/main/jniLibs/x86/
+    # ---- copy libraries to Antox folder ----
+# ------ build libsodiumjni.so ------
 
 
 # ------ build tox4j API stuff ------
@@ -154,6 +203,7 @@ dependencies:
 
 
 # ------ build tox4j stuff ----------
+    - sudo apt-get install check libcv-dev libhighgui-dev libopencv-contrib-dev libsndfile1-dev libvpx-dev opam portaudio19-dev texinfo
     - cd jvm-toxcore-c/ ; pwd
     # -- use: https://github.com/TokTok/jvm-toxcore-c/commit/$_JVMTOXCOREC_VERSION_
     - cd jvm-toxcore-c/ ; git fetch
@@ -263,7 +313,9 @@ dependencies:
 
 
 # --------- install 32bit stuff for clang and 32bit android tools --------
-    
+    - sudo dpkg --add-architecture i386
+    - sudo apt-get update
+    - sudo apt-get install libncurses5:i386
 # --------- install 32bit stuff for clang and 32bit android tools --------
 
     - ./gradlew build --max-workers=1 --stacktrace --debug --no-daemon || ./gradlew build --stacktrace --debug --no-daemon # first build may FAIL
