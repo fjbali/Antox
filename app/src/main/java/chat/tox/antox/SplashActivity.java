@@ -12,6 +12,7 @@ import java.io.InputStream;
 import java.util.List;
 
 import chat.tox.antox.data.State;
+import chat.tox.antox.utils.AntoxLog;
 import pub.devrel.easypermissions.AppSettingsDialog;
 import pub.devrel.easypermissions.EasyPermissions;
 
@@ -50,6 +51,8 @@ public class SplashActivity extends AppCompatActivity implements EasyPermissions
                     {
                         out.write(buff, 0, read);
                     }
+
+                    AntoxLog.debug("unpacking included nodesfile", AntoxLog.DEFAULT_TAG());
                 }
                 finally
                 {
