@@ -46,6 +46,8 @@ dependencies:
     - mkdir -p ~/_bin/
     - if [[ "$CIRCLE_BRANCH""x" =~ "fullsource" ]]; then printf '#!/bin/bash\necho "fullsource"\n' > ~/_bin/f ; else printf '#!/bin/bash\nexit 0\n' > ~/_bin/f ; fi
     - chmod a+rx ~/_bin/f
+    - if [[ "$CIRCLE_BRANCH""x" =~ "fullsource" ]]; then printf '#!/bin/bash\nexit 0\n' > ~/_bin/xf ; else printf '#!/bin/bash\necho "fullsource"\n' > ~/_bin/xf ; fi
+    - chmod a+rx ~/_bin/xf
     # --- fullsource build? ---
 
     - git submodule init
@@ -325,6 +327,7 @@ dependencies:
     - sudo apt-get install libncurses5:i386
 # --------- install 32bit stuff for clang and 32bit android tools --------
 
+    - . xf; ./download-dependencies.sh
     - ./gradlew build --max-workers=1 --stacktrace --debug --no-daemon || ./gradlew build --stacktrace --debug --no-daemon # first build may FAIL
 
 # --- save lint output ---
