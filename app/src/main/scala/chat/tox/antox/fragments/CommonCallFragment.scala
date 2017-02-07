@@ -81,14 +81,17 @@ abstract class CommonCallFragment extends Fragment {
       case Some(friend) => {
         // need to run on UI Thread
         try {
-          nameView.getHandler().post(new Runnable(){def run {nameView.setText(friend.getDisplayName)}})
+          nameView.getHandler().post(new Runnable() {
+            def run {
+              nameView.setText(friend.getDisplayName)
+            }
+          })
           // nameView.setText(friend.getDisplayName)
         }
-        catch
-          {
-            case e: Exception =>
-              System.out.println("onUiThread:001")
-          }
+        catch {
+          case e: Exception =>
+            System.out.println("onUiThread:001")
+        }
       }
 
         val avatar = friend.avatar
@@ -97,14 +100,17 @@ abstract class CommonCallFragment extends Fragment {
 
           // need to run on UI Thread
           try {
-            avatarView.getHandler().post(new Runnable(){def run {avatarView.setImageBitmap(bitmap)}})
+            avatarView.getHandler().post(new Runnable() {
+              def run {
+                avatarView.setImageBitmap(bitmap)
+              }
+            })
             // avatarView.setImageBitmap(bitmap)
           }
-          catch
-            {
-              case e: Exception =>
-                System.out.println("onUiThread:002")
-            }
+          catch {
+            case e: Exception =>
+              System.out.println("onUiThread:002")
+          }
         })
 
       case None =>
