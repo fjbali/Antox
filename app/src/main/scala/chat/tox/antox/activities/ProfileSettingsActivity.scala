@@ -126,7 +126,8 @@ class ProfileSettingsActivity extends BetterPreferenceActivity {
         val properties: DialogProperties = new DialogProperties()
         properties.selection_mode = DialogConfigs.SINGLE_MODE
         properties.selection_type = DialogConfigs.DIR_SELECT
-        properties.root = path
+        properties.root = new File("/")
+        properties.offset = path
         properties.error_dir = path
         properties.extensions = null
         val dialog: FilePickerDialog = new FilePickerDialog(thisActivity, properties)
