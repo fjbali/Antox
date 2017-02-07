@@ -38,4 +38,5 @@ script:
    - _branch_from=$( if [ "$TRAVIS_PULL_REQUEST_BRANCH""x" == "x" ]; then echo "$TRAVIS_BRANCH" ; else echo "$TRAVIS_PULL_REQUEST_BRANCH" ; fi ) ; echo $_branch_from
    - _branch_from=$( if [ "$TRAVIS_PULL_REQUEST_BRANCH""x" == "x" ]; then echo "$TRAVIS_BRANCH" ; else echo "$TRAVIS_PULL_REQUEST_BRANCH" ; fi ) ; if [[ $_branch_from"x" =~ "fullsource" ]]; then bash ./fullsource/download-dependencies.sh ; else bash ./download-dependencies.sh ; fi
    - ./gradlew assembleRelease -x lint --stacktrace
-- find . -name '*.apk' -exec ls -al {} \;
+   - find . -name '*.apk' -exec ls -al {} \;
+
