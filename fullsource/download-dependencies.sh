@@ -15,9 +15,21 @@ cd ${0%/*}
 mkdir -p app/libs
 rm -f app/libs/tox4j*.jar
 
-REPOUSER="zoff99"
+# default values ------------
+# REPOUSER="zoff99"
+# REPO="Antox"
+# BRANCH="zoff99%2FAntox_v0.25.1"
+# default values ------------
+
+# get values from git commandline ------------
+BRANCH=$(git rev-parse --abbrev-ref HEAD|sed -e 's# #%20#g'|sed -e 's#/#%2F#g')
 REPO="Antox"
-BRANCH="zoff99%2FAntox_v0.25.1"
+REPOUSER=$(git config --get remote.origin.url|cut -d'/' -f 4)
+# get values from git commandline ------------
+
+echo $BRANCH
+echo $REPO
+echo $REPOUSER
 
 wget 'https://circleci.com/api/v1/project/'"$REPOUSER"'/'"$REPO"'/latest/artifacts/0/$CIRCLE_ARTIFACTS/supplement.zip?filter=successful&branch='"$BRANCH" -O ./supplement.zip
 unzip -o ./supplement.zip
