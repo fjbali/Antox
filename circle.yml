@@ -44,7 +44,7 @@ dependencies:
 
     # --- fullsource build? ---
     - mkdir -p ~/_bin/
-    - if [[ "$CIRCLE_BRANCH""x" =~ "fullsource" ]]; then printf '#!/bin/bash\necho "fullsource"\n' > ~/_bin/f ; else bash printf '#!/bin/bash\nexit0\n' > ~/_bin/f ; fi
+    - if [[ "$CIRCLE_BRANCH""x" =~ "fullsource" ]]; then printf '#!/bin/bash\necho "fullsource"\n' > ~/_bin/f ; else printf '#!/bin/bash\nexit0\n' > ~/_bin/f ; fi
     - chmod a+rx ~/_bin/f
     # --- fullsource build? ---
 
