@@ -11,7 +11,7 @@ rm -f app/src/main/jniLibs/armeabi/libkaliumjni.so
 rm -f app/src/main/jniLibs/x86/libkaliumjni.so
 rm -f app/src/main/jniLibs/arm64-v8a/libkaliumjni.so
 
-cd ${0%/*}
+pwd
 mkdir -p app/libs
 rm -f app/libs/tox4j*.jar
 
