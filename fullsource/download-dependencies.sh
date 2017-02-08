@@ -36,6 +36,7 @@ unzip -o ./supplement.zip
 ls -al ./supplement.zip
 rm -f ./supplement.zip
 
+mkdir -p app/src/main/java/org/
 pushd app/src/main/java/org/
 ln -sf ../../../../../libsodium-jni/src/main/java/org/libsodium
 popd
