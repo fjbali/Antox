@@ -23,7 +23,7 @@ Describe here the issue that you are experiencing.
 **Android version:** 0.0.0
 **Antox version:** 0.0.0
 
-### Link to debug log
-<!-- After the crash, Antox will write a crashlog onto the SD Card -->
+### Crashlog
+<!-- After the crash, Antox will write a crashlog onto the SD Card. attach it here -->
 !be careful, the crashlog may contain sensitive data!
 
