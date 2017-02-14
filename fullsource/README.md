@@ -1,12 +1,12 @@
 Compile tox dependencies from source (including libsodiumjni)
 =
 
-**Travis:** [![Build Status](https://travis-ci.org/zoff99/Antox.png?branch=zoff99%2FAntox_v0.25.1_fullsource)](https://travis-ci.org/zoff99/Antox)
-**CircleCI:** [![CircleCI](https://circleci.com/gh/zoff99/Antox/tree/zoff99%2FAntox_v0.25.1_fullsource.png?style=badge)](https://circleci.com/gh/zoff99/Antox)
+**Travis:** [![Build Status](https://travis-ci.org/zoff99/Antox.png?branch=zoff99%2FAntox_v0.25.2_fullsource)](https://travis-ci.org/zoff99/Antox/branches)
+**CircleCI:** [![CircleCI](https://circleci.com/gh/zoff99/Antox/tree/zoff99%2FAntox_v0.25.2_fullsource.png?style=badge)](https://circleci.com/gh/zoff99/Antox/tree/zoff99%2FAntox_v0.25.2_fullsource)
 
 =====
 
-This commit APK can be downloaded from CircleCI, [here](https://circleci.com/api/v1/project/zoff99/Antox/latest/artifacts/0/$CIRCLE_ARTIFACTS/Antox.apk?filter=successful&branch=zoff99%2FAntox_v0.25.1_fullsource)
+This commit APK can be downloaded from CircleCI, [here](https://circleci.com/api/v1/project/zoff99/Antox/latest/artifacts/0/$CIRCLE_ARTIFACTS/Antox.apk?filter=successful&branch=zoff99%2FAntox_v0.25.2_fullsource)
 
 ###Compiling Antox From Source using Gradle
 - Download and install the SDK tools http://developer.android.com/sdk/index.html#Other
@@ -46,7 +46,7 @@ cd jvm-toxcore-c/ ; git checkout 137be841050860b71d75c115aa0b046fec127ae5
  + buildscripts/dependencies.pl
  ```
  "https://github.com/jedisct1", "libsodium", "1.0.11", @common,
- "https://github.com/TokTok", "c-toxcore", "v0.1.2", @common,
+ "https://github.com/TokTok", "c-toxcore", "v0.1.6", @common,
  ```
 - in https://github.com/TokTok/jvm-toxcore-api
  + no versions to configure here
