@@ -1,13 +1,13 @@
 <img src="http://i.imgur.com/fFhygVw.png" width="400" height="185" />
 
-**Travis:** [![Build Status](https://travis-ci.org/zoff99/Antox.png?branch=zoff99%2FAntox_v0.25.1_fullsource)](https://travis-ci.org/zoff99/Antox)
-**CircleCI:** [![CircleCI](https://circleci.com/gh/zoff99/Antox/tree/zoff99%2FAntox_v0.25.1_fullsource.png?style=badge)](https://circleci.com/gh/zoff99/Antox)
+**Travis:** [![Build Status](https://travis-ci.org/zoff99/Antox.png?branch=zoff99%2FAntox_v0.25.2_fullsource)](https://travis-ci.org/zoff99/Antox/branches)
+**CircleCI:** [![CircleCI](https://circleci.com/gh/zoff99/Antox/tree/zoff99%2FAntox_v0.25.2_fullsource.png?style=badge)](https://circleci.com/gh/zoff99/Antox/tree/zoff99%2FAntox_v0.25.2_fullsource)
 
 =====
 
 ###Getting Antox
 
-The APK can be downloaded from CircleCI, [here](https://circleci.com/api/v1/project/zoff99/Antox/latest/artifacts/0/$CIRCLE_ARTIFACTS/Antox.apk?filter=successful&branch=zoff99%2FAntox_v0.25.1_fullsource)
+The APK can be downloaded from CircleCI, [here](https://circleci.com/api/v1/project/zoff99/Antox/latest/artifacts/0/$CIRCLE_ARTIFACTS/Antox.apk?filter=successful&branch=zoff99%2FAntox_v0.25.2_fullsource)
 
 ###What Is Currently Working
 - One to one messaging
