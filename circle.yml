@@ -31,7 +31,7 @@ machine:
     _LIBSODIUM_VERSION_SBT_: "1.0.7" # this is actually IGNORED !!
 
     _LIBSODIUM_VERSION_: "1.0.11" # can only specify branch here
-    _CTOXCORE_VERSION_ : "v0.1.6" # can only specify branch here
+    _CTOXCORE_VERSION_ : "v0.1.5" # can only specify branch here
 
 
 dependencies:
