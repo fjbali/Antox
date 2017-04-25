@@ -55,6 +55,7 @@ dependencies:
     - git submodule update ; exit 0 # strange error on first "update" call
     - git submodule sync
     - git submodule update
+    - git fetch --recurse-submodules ; exit 0
 
     - sudo apt-get update > /dev/null 2> /dev/null
     - sudo apt-get install xvfb > /dev/null 2> /dev/null
@@ -147,6 +148,8 @@ dependencies:
     - . f;cd libsodium-jni/ ; git submodule init
     - . f;cd libsodium-jni/ ; git submodule update ; exit 0 # what????
     - . f;cd libsodium-jni/ ; git submodule update ; exit 0 # what????
+    - . f;cd libsodium-jni/ ; cd libsodium ; ls -al ; exit 0 # what????
+    - . f;cd libsodium-jni/ ; git fetch --recurse-submodules # ???
     - . f;cd libsodium-jni/ ; cd libsodium ; ls -al ; exit 0 # what????
 
 # ------------- this sometimes fails and then works again, try 2 times ------------------
