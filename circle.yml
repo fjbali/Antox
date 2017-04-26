@@ -149,7 +149,7 @@ dependencies:
     - . f;cd libsodium-jni/ ; git submodule init
     - . f;cd libsodium-jni/ ; git submodule update ; exit 0 # what????
     - . f;cd libsodium-jni/ ; cd libsodium ; ls -al ; exit 0
-    - . f;cd libsodium-jni; rm -Rf libsodium; git clone https://github.com/jedisct1/libsodium ; cd libsodium ; git checkout _LIBSODIUMJNI_SODIUM_VERSION_
+    - . f;cd libsodium-jni; rm -Rf libsodium; git clone https://github.com/jedisct1/libsodium ; cd libsodium ; git checkout "$_LIBSODIUMJNI_SODIUM_VERSION_"
     - . f;cd libsodium-jni/ ; cd libsodium ; ls -al
 
 # ------------- this sometimes fails and then works again, try 2 times ------------------
