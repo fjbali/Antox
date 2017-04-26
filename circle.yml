@@ -24,7 +24,7 @@ machine:
     PATH: ~/_bin:$PATH
 
     _LIBSODIUMJNI_VERSION_: "f21eb1c83da8be42efebda01b68474abef958285" # 1.0.3 (uses libsodium somewhere between 1.0.10 and 1.0.11 this seems bad!)
-    _LIBSODIUMJNI_SODIUM_VERSION_: "ea67c2daf14646af8cd041671bf2e35c61ff66a3" # sodium version (but only for libsodium-jni !!)
+    _LIBSODIUMJNI_SODIUM_VERSION_: "1.0.11" # sodium version (but only for libsodium-jni !!)
     _JVMTOXCOREAPI_VERSION_ : "c6d05b3d200de9ea53b19e0101d08abd16a751cd" # 0.1.2 SNAPSHOT
     _JVMTOXCOREC_VERSION_ : "137be841050860b71d75c115aa0b046fec127ae5" # 0.1.2 SNAPSHOT
 
