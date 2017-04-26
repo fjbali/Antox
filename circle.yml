@@ -24,7 +24,8 @@ machine:
     PATH: ~/_bin:$PATH
 
     _LIBSODIUMJNI_VERSION_: "f21eb1c83da8be42efebda01b68474abef958285" # 1.0.3 (uses libsodium somewhere between 1.0.10 and 1.0.11 this seems bad!)
-    _LIBSODIUMJNI_SODIUM_VERSION_: "1.0.11" # sodium version (but only for libsodium-jni !!)
+    _LIBSODIUMJNI_SODIUM_VERSION_: "ea67c2daf14646af8cd041671bf2e35c61ff66a3" # sodium version (but only for libsodium-jni !!)
+    # _LIBSODIUMJNI_SODIUM_VERSION_: "1.0.11" # sodium version (but only for libsodium-jni !!)
     _JVMTOXCOREAPI_VERSION_ : "c6d05b3d200de9ea53b19e0101d08abd16a751cd" # 0.1.2 SNAPSHOT
     _JVMTOXCOREC_VERSION_ : "137be841050860b71d75c115aa0b046fec127ae5" # 0.1.2 SNAPSHOT
 
@@ -149,7 +150,9 @@ dependencies:
     - . f;cd libsodium-jni/ ; git submodule init
     - . f;cd libsodium-jni/ ; git submodule update ; exit 0 # what????
     - . f;cd libsodium-jni/ ; cd libsodium ; ls -al ; exit 0
-    - . f;cd libsodium-jni; rm -Rf libsodium; git clone https://github.com/jedisct1/libsodium ; cd libsodium ; git checkout "$_LIBSODIUMJNI_SODIUM_VERSION_"
+    #- . f;cd libsodium-jni; rm -Rf libsodium; git clone https://github.com/jedisct1/libsodium ; cd libsodium ; git checkout "$_LIBSODIUMJNI_SODIUM_VERSION_"
+    - . f;cd libsodium-jni; rm -Rf libsodium; wget 'https://github.com/jedisct1/libsodium/archive/ea67c2daf14646af8cd041671bf2e35c61ff66a3.zip' -O ll.zip ;
+      unzip -t ll.zip; ln -s libsodium-ea67c2daf14646af8cd041671bf2e35c61ff66a3 libsodium ; rm -fv ll.zip
     - . f;cd libsodium-jni/ ; cd libsodium ; ls -al
 
 # ------------- this sometimes fails and then works again, try 2 times ------------------
@@ -157,10 +160,15 @@ dependencies:
 # ------------- this sometimes fails and then works again, try 2 times ------------------
 
     # scripts don't work and need tweaking -----
+    - . f;cd libsodium-jni/ ; cat build.sh
     - . f;cd libsodium-jni/ ; sed -i -e 's#quiet install#quiet install;sed -i -e "sx--force xx" ./dist-build/android-build.sh#' build.sh
-    - . f;cd libsodium-jni/ ; sed -i -e 's#git submodule update#rm -Rf libsodium; git clone https://github.com/jedisct1/libsodium ; cd libsodium ; git checkout '"$_LIBSODIUMJNI_SODIUM_VERSION_"';cd ..#' build.sh
-    - . f;cd libsodium-jni/ ; rm -fv libsodium/dist-build/android-build.sh
-    - . f;cd libsodium-jni/ ; wget https://raw.githubusercontent.com/jedisct1/libsodium/ea67c2daf14646af8cd041671bf2e35c61ff66a3/dist-build/android-build.sh -O libsodium/dist-build/android-build.sh
+    - . f;cd libsodium-jni/ ; sed -i -e 's#git submodule init##' build.sh
+    - . f;cd libsodium-jni/ ; sed -i -e 's#git submodule sync##' build.sh
+    - . f;cd libsodium-jni/ ; sed -i -e 's#git submodule update##' build.sh
+    - . f;cd libsodium-jni/ ; cat build.sh
+    # - . f;cd libsodium-jni/ ; sed -i -e 's#git submodule update#rm -Rf libsodium; git clone https://github.com/jedisct1/libsodium ; cd libsodium ; git checkout '"$_LIBSODIUMJNI_SODIUM_VERSION_"';cd ..#' build.sh
+    #- . f;cd libsodium-jni/ ; rm -fv libsodium/dist-build/android-build.sh
+    #- . f;cd libsodium-jni/ ; wget https://raw.githubusercontent.com/jedisct1/libsodium/ea67c2daf14646af8cd041671bf2e35c61ff66a3/dist-build/android-build.sh -O libsodium/dist-build/android-build.sh
     # scripts don't work and need tweaking -----
 
 
