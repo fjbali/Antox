@@ -167,6 +167,8 @@ dependencies:
     - . f;cd libsodium-jni/ ; sed -i -e 's#git submodule update##' build.sh
     - . f;cd libsodium-jni/ ; sed -i -e 's#rm -rf libsodium##' build.sh
     - . f;cd libsodium-jni/ ; sed -i -e 's#^git fetch.*##' build.sh
+    - . f;cd libsodium-jni/ ; sed -i -e 's#^git reset.*##' build.sh
+    - . f;cd libsodium-jni/ ; sed -i -e 's#^git pull.*##' build.sh
     - . f;cd libsodium-jni/ ; cat build.sh
     # - . f;cd libsodium-jni/ ; sed -i -e 's#git submodule update#rm -Rf libsodium; git clone https://github.com/jedisct1/libsodium ; cd libsodium ; git checkout '"$_LIBSODIUMJNI_SODIUM_VERSION_"';cd ..#' build.sh
     #- . f;cd libsodium-jni/ ; rm -fv libsodium/dist-build/android-build.sh
