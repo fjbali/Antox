@@ -173,6 +173,8 @@ dependencies:
     - . f;cd libsodium-jni/ ; sed -i -e 's#> /dev/null##' build.sh
     - . f;cd libsodium-jni/ ; sed -i -e 's#--quiet##' build.sh
     - . f;cd libsodium-jni/ ; sed -i -e 's#./dist-build/android-armv8-a.sh##' build.sh
+    - . f;cd libsodium-jni/ ; sed -i -e 's#./dist-build/android-mips64.sh##' build.sh
+    - . f;cd libsodium-jni/ ; sed -i -e 's#./dist-build/android-x86_64.sh##' build.sh
     - . f;cd libsodium-jni/ ; cat build.sh
     # scripts don't work and need tweaking -----
 
