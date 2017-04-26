@@ -152,7 +152,7 @@ dependencies:
     - . f;cd libsodium-jni/ ; cd libsodium ; ls -al ; exit 0
     #- . f;cd libsodium-jni; rm -Rf libsodium; git clone https://github.com/jedisct1/libsodium ; cd libsodium ; git checkout "$_LIBSODIUMJNI_SODIUM_VERSION_"
     - . f;cd libsodium-jni; rm -Rf libsodium; wget 'https://github.com/jedisct1/libsodium/archive/ea67c2daf14646af8cd041671bf2e35c61ff66a3.zip' -O ll.zip ;
-      unzip -t ll.zip; ln -s libsodium-ea67c2daf14646af8cd041671bf2e35c61ff66a3 libsodium ; rm -fv ll.zip
+      unzip ll.zip; ln -s libsodium-ea67c2daf14646af8cd041671bf2e35c61ff66a3 libsodium ; rm -fv ll.zip
     - . f;cd libsodium-jni/ ; cd libsodium ; ls -al
 
 # ------------- this sometimes fails and then works again, try 2 times ------------------
