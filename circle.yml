@@ -169,18 +169,12 @@ dependencies:
     - . f;cd libsodium-jni/ ; sed -i -e 's#^git fetch.*##' build.sh
     - . f;cd libsodium-jni/ ; sed -i -e 's#^git reset.*##' build.sh
     - . f;cd libsodium-jni/ ; sed -i -e 's#^git pull.*##' build.sh
+    - . f;cd libsodium-jni/ ; sed -i -e 's#> /dev/null##' build.sh
+    - . f;cd libsodium-jni/ ; sed -i -e 's#--quiet##' build.sh
     - . f;cd libsodium-jni/ ; cat build.sh
-    # - . f;cd libsodium-jni/ ; sed -i -e 's#git submodule update#rm -Rf libsodium; git clone https://github.com/jedisct1/libsodium ; cd libsodium ; git checkout '"$_LIBSODIUMJNI_SODIUM_VERSION_"';cd ..#' build.sh
-    #- . f;cd libsodium-jni/ ; rm -fv libsodium/dist-build/android-build.sh
-    #- . f;cd libsodium-jni/ ; wget https://raw.githubusercontent.com/jedisct1/libsodium/ea67c2daf14646af8cd041671bf2e35c61ff66a3/dist-build/android-build.sh -O libsodium/dist-build/android-build.sh
     # scripts don't work and need tweaking -----
 
-
-    - . f;grep -rl 'unified-headers' *
     - . f;cd libsodium-jni/ ; ./build.sh
-    - . f;grep -rl 'unified-headers' *
-
-
     - . f;cd libsodium-jni/ ; ./build-kaliumjni.sh
     - . f;cd libsodium-jni/ ; ./build-libsodiumjni.sh
     - . f;find ~/ -name 'libsodiumjni.so' -exec ls -al {} \; ; exit 0
