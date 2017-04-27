@@ -369,6 +369,11 @@ dependencies:
     - sudo apt-get install libncurses5:i386
 # --------- install 32bit stuff for clang and 32bit android tools --------
 
+# xxxxxxxxxxxxx DEBUG xxxxxxxxxxxxx
+    - cd ~ ; grep -ri Dateiauswahl *
+# xxxxxxxxxxxxx DEBUG xxxxxxxxxxxxx
+
+
     - . xf; ./download-dependencies.sh
     - ./gradlew build --max-workers=1 --stacktrace --debug --no-daemon || ./gradlew build --stacktrace --debug --no-daemon # first build may FAIL
 
@@ -378,6 +383,12 @@ dependencies:
     - cp -av ./app/lint-report.xml $CIRCLE_ARTIFACTS/ ; exit 0
     - cp -av ./lint-report.txt $CIRCLE_ARTIFACTS/ ; exit 0
 # --- save lint output ---
+
+
+# xxxxxxxxxxxxx DEBUG xxxxxxxxxxxxx
+    - cd ~ ; grep -ri Dateiauswahl *
+# xxxxxxxxxxxxx DEBUG xxxxxxxxxxxxx
+
 
 # ----------- show generated apk file -----------
     - ls -al app/build/outputs/apk/ ; exit 0
