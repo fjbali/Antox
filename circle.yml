@@ -189,6 +189,14 @@ dependencies:
     - . f;cd libsodium-jni/ ; sed -i -e 's#.*android-mips64r6.*##' build.gradle
     - . f;cd libsodium-jni/ ; sed -i -e 's#.*android-westmere.*##' build.gradle
     - . f;cd libsodium-jni/ ; cat ./build.gradle
+
+    - . f;cd libsodium-jni/ ; sed -i -e 's#mips64##' jni/Application.mk
+    - . f;cd libsodium-jni/ ; sed -i -e 's#x86_64##' jni/Application.mk
+    - . f;cd libsodium-jni/ ; sed -i -e 's#arm64-v8a##' jni/Application.mk
+    - . f;cd libsodium-jni/ ; cat jni/Application.mk
+
+    - . f;cd libsodium-jni/ ; sed -i -e 's#mips64##' jni/Application.mk
+
     - . f;cd libsodium-jni/ ; ./build-libsodiumjni.sh
 
     - . f;find ~/ -name 'libsodiumjni.so' -exec ls -al {} \; ; exit 0
