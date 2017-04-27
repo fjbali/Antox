@@ -183,12 +183,12 @@ dependencies:
     - . f;cd libsodium-jni/ ; ./build.sh
     - . f;cd libsodium-jni/ ; ./build-kaliumjni.sh
 
-    - . f:cd libsodium-jni/ ; cat ./build-libsodiumjni.sh ; exit 0
-    - . f:cd libsodium-jni/ ; cat ./build.gradle
+    - . f;cd libsodium-jni/ ; cat ./build-libsodiumjni.sh ; exit 0
+    - . f;cd libsodium-jni/ ; cat ./build.gradle
     - . f;cd libsodium-jni/ ; sed -i -e 's#.*android-armv8-a.*##' build.gradle
     - . f;cd libsodium-jni/ ; sed -i -e 's#.*android-mips64r6.*##' build.gradle
     - . f;cd libsodium-jni/ ; sed -i -e 's#.*android-westmere.*##' build.gradle
-    - . f:cd libsodium-jni/ ; cat ./build.gradle
+    - . f;cd libsodium-jni/ ; cat ./build.gradle
     - . f;cd libsodium-jni/ ; ./build-libsodiumjni.sh
 
     - . f;find ~/ -name 'libsodiumjni.so' -exec ls -al {} \; ; exit 0
