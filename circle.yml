@@ -178,18 +178,19 @@ dependencies:
     - . f;cd libsodium-jni/ ; sed -i -e 'sxmv libsodium-android-westmerex#x' build.sh
     - . f;cd libsodium-jni/ ; cat build.sh
 
-    - . f:cd libsodium-jni/ ; cat ./build-libsodiumjni.sh
+    # scripts don't work and need tweaking -----
+
+    - . f;cd libsodium-jni/ ; ./build.sh
+    - . f;cd libsodium-jni/ ; ./build-kaliumjni.sh
+
+    - . f:cd libsodium-jni/ ; cat ./build-libsodiumjni.sh ; exit 0
     - . f:cd libsodium-jni/ ; cat ./build.gradle
     - . f;cd libsodium-jni/ ; sed -i -e 's#.*android-armv8-a.*##' build.gradle
     - . f;cd libsodium-jni/ ; sed -i -e 's#.*android-mips64r6.*##' build.gradle
     - . f;cd libsodium-jni/ ; sed -i -e 's#.*android-westmere.*##' build.gradle
     - . f:cd libsodium-jni/ ; cat ./build.gradle
-
-    # scripts don't work and need tweaking -----
-
-    - . f;cd libsodium-jni/ ; ./build.sh
-    - . f;cd libsodium-jni/ ; ./build-kaliumjni.sh
     - . f;cd libsodium-jni/ ; ./build-libsodiumjni.sh
+
     - . f;find ~/ -name 'libsodiumjni.so' -exec ls -al {} \; ; exit 0
     - . f;find ~/ -name 'libsodiumjni.so' -exec file {} \; ; exit 0
     # ---- copy libraries to Antox folder ----
