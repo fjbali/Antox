@@ -108,11 +108,6 @@ dependencies:
 # ------ remove old libs and jar (if they exist) and create missing dirs --------
 
 
-    - cat app/build.gradle | grep 'useCompileDaemon'
-    - sed -i -e 's#scalaCompileOptions.useCompileDaemon = true#scalaCompileOptions.useCompileDaemon = false#' app/build.gradle
-    - cat app/build.gradle | grep 'useCompileDaemon'
-
-
     # -- what stuff is running now? get more free mem just in case
     - ps auxwww ; exit 0
     - sudo pkill -9 -u postgres ; exit 0
