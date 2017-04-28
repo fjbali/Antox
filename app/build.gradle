@@ -126,6 +126,20 @@ dependencies {
     compile fileTree(dir: 'libs', include: '*.jar')
     compile fileTree(dir: 'apache-commons-jar', include: '*.jar')
 
+    // jvm-toxcore dependencies !! --------------
+    // --- this is BAD !!!!!!!!!!! --------------
+    // --- this is BAD !!!!!!!!!!! --------------
+    // jvm-toxcore dependencies !! --------------
+    compile 'org.scalaz:scalaz-core_2.11:7.2.8'
+    compile 'com.typesafe.scala-logging:scala-logging_2.11:3.5.0'
+    compile 'org.scodec:scodec-core_2.11:1.10.3'
+    compile group: 'org.slf4j', name: 'slf4j-simple', version: '1.7.25'
+    compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.25'
+    // jvm-toxcore dependencies !! --------------
+    // --- this is BAD !!!!!!!!!!! --------------
+    // --- this is BAD !!!!!!!!!!! --------------
+    // jvm-toxcore dependencies !! --------------
+
     compile 'com.android.support:multidex:1.0.1' // ???
     compile 'com.android.support:design:25.1.0'
     compile 'com.android.support:recyclerview-v7:25.1.0'
