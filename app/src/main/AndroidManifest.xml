@@ -42,8 +42,7 @@
 
     <activity
         android:name="chat.tox.antox.antox_cd.MainActivity"
-        android:configChanges="screenSize|locale|touchscreen|navigation|orientation|fontScale|keyboard|keyboardHidden"
-        android:launchMode="singleTask">
+        android:configChanges="screenSize|locale|touchscreen|navigation|orientation|fontScale|keyboard|keyboardHidden">
         <intent-filter>
             <action android:name="android.intent.action.MAIN"/>
             <category android:name="android.intent.category.LAUNCHER"/>
