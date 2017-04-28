@@ -17,8 +17,8 @@ machine:
     JAVA_OPTS: "-Xms512m -Xmx1024m"
     GRADLE_OPTS: '-Xmx512m -Dorg.gradle.jvmargs="-Xmx1700m -XX:+HeapDumpOnOutOfMemoryError -XX:MaxPermSize=1700m"'
     SBT_OPTS: "-Xms512M -Xmx1700M -Xss1M -XX:+CMSClassUnloadingEnabled -XX:MaxPermSize=256M"
-    CLASS_P: chat.tox.antox
-    START_INTENT_P: chat.tox.antox.activities.LoginActivity
+    CLASS_P: chat.tox.antox_cd
+    START_INTENT_P: chat.tox.antox.antox_cd.MainActivity
     DEBIAN_FRONTEND: noninteractive
 
     PATH: ~/_bin:$PATH
