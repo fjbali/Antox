@@ -36,19 +36,18 @@
     <application
         android:allowBackup="false"
         android:icon="@drawable/ic_launcher"
-        android:logo="@drawable/ic_actionbar"
-        android:theme="@style/AntoxTheme"
         android:label="@string/app_name"
-        tools:replace="android:allowBackup,android:label,android:icon">
+        android:logo="@drawable/ic_actionbar"
+        tools:replace="android:allowBackup,android:label,android:icon" />
 
-        <activity
-            android:name="chat.tox.antox.antox_cd.MainActivity"
-            android:configChanges="screenSize|locale|touchscreen|navigation|orientation|fontScale|keyboard|keyboardHidden"
-            android:launchMode="singleTask"
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
-        </activity>
+    <activity
+        android:name="chat.tox.antox.antox_cd.MainActivity"
+        android:configChanges="screenSize|locale|touchscreen|navigation|orientation|fontScale|keyboard|keyboardHidden"
+        android:launchMode="singleTask">
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN"/>
+            <category android:name="android.intent.category.LAUNCHER"/>
+        </intent-filter>
+    </activity>
 
 </manifest>
