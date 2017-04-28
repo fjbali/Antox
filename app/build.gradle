@@ -32,7 +32,7 @@ repositories {
 }
 
 apply plugin: "com.android.application"
-apply plugin: "jp.leafytree.android-scala"
+// apply plugin: "jp.leafytree.android-scala"
 
 android {
     compileSdkVersion 25
@@ -53,9 +53,7 @@ android {
 
         vectorDrawables.useSupportLibrary = true
 
-        testInstrumentationRunner "android.test.InstrumentationTestRunner"
-        applicationId "chat.tox.antox"
-        testApplicationId "chat.tox.antox.tests"
+        applicationId "chat.tox.antox_cd"
     }
 
     aaptOptions {
@@ -129,15 +127,6 @@ dependencies {
     compile fileTree(dir: 'apache-commons-jar', include: '*.jar')
 
     compile 'com.android.support:multidex:1.0.1' // ???
-    compile 'org.scala-lang:scala-library:2.11.8' // 2.11.8 -> [2.12.0, 2.12.1] *dont upgrade*
-    // 3.6.1-10 -> [4.0, 4.1, 4.2]
-    compile 'org.scaloid:scaloid_2.11:4.2'
-    compile 'com.typesafe.scala-logging:scala-logging_2.11:3.5.0' // 3.1.0 -> [3.5.0]
-    compile 'com.trueaccord.scalapb:scalapb-runtime_2.11:0.5.47'
-    // 7.2.0-M1 -> [7.2.8, 7.3.0-M8] *dont upgrade*
-    compile 'org.scalaz:scalaz-core_2.11:7.2.8'
-    // 1.8.2 -> [1.8.3, 1.9.0, 1.10.3]
-    compile 'org.scodec:scodec-core_2.11:1.10.3'
     compile 'com.android.support:design:25.1.0'
     compile 'com.android.support:recyclerview-v7:25.1.0'
     compile 'com.android.support:appcompat-v7:25.1.0'
@@ -145,61 +134,11 @@ dependencies {
     compile 'com.android.support:support-v4:25.1.0'
     //
     //
-    // 1.0.6 -> [1.1.10, 1.2.4] *1.2.4*
-    compile 'io.reactivex:rxjava:1.2.4'
-    // 0.24.0 -> [1.0.2, 1.1.0, 1.2.0, 1.2.1] *1.2.1*
-    // io.reactivex:rxandroid -> io.reactivex:rxjava
-    //compile ('io.reactivex:rxandroid:0.24.0'){
-    //    exclude group: 'io.reactivex' }
-    // 0.25.0 -> [0.25.1, 0.26.5] ***
-    // io.reactivex:rxscala_2 -> io.reactivex:rxjava
-    compile('io.reactivex:rxscala_2.11:0.26.4') {
-        exclude group: 'io.reactivex'
-    }
-    //
-    //
-    // 0.4.0 -> [0.4.1, 0.5.1, 0.6.3, 0.7.0, 0.8.0, 1.0.0, 1.1.1]
-    // com.squareup.sqlbrite:sqlbrite -> io.reactivex:rxjava
-    compile('com.squareup.sqlbrite:sqlbrite:1.1.1') {
-        exclude group: 'io.reactivex'
-    }
     // no newer version yet
     compile 'com.squareup.retrofit:retrofit:1.9.0'
     compile 'com.squareup.okhttp:okhttp-urlconnection:2.7.5'
     // 2.0.0 -> [2.1.0, 2.2.0, 2.6.0, 2.7.5]
     compile 'com.squareup.okhttp:okhttp:2.7.5' // 2.0.0 -> [2.1.0, 2.2.0, 2.6.0, 2.7.5]
     compile 'com.intellij:annotations:12.0' // no newer version yet
-    compile 'de.hdodenhof:circleimageview:2.1.0' // 1.2.2 -> [1.3.0, 2.0.0, 2.1.0] *2.1.0*
-    // ---
-    // Error:Conflict with dependency 'com.android.support:support-annotations'. Resolved versions for app (24.2.0) and test app (23.0.1) differ.
-    // 1.0.3 -> [1.0.9, 1.1.1] *1.0.9*
-    compile('com.jpardogo.materialtabstrip:library:1.0.9') {
-        exclude group: 'com.android.support'
-    }
-    // ---
-    compile 'com.balysv:material-ripple:1.0.2' // no newer version yet
-    // ---
-    // Error:Conflict with dependency
-    // 1.3.0 -> [2.2.5] *2.2.5*
-    compile('jp.wasabeef:recyclerview-animators:2.2.5') {
-        exclude group: 'com.android.support'
-    }
-    // ---
-
-    compile 'pub.devrel:easypermissions:0.3.0'
-    compile 'com.github.angads25:filepicker:1.0.9'
-
-    // androidTestCompile 'org.scala-lang:scala-library:2.11.8'
-    // androidTestCompile 'com.android.support.test:runner:0.4'
-    // androidTestCompile 'com.android.support.test:rules:0.4'
-    // androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.1'
 }
 
-tasks.withType(ScalaCompile) {
-    // If you want to use scala compile daemon
-    scalaCompileOptions.useCompileDaemon = false
-    // Suppress deprecation warnings
-    scalaCompileOptions.deprecation = false
-    // Additional parameters
-    scalaCompileOptions.additionalParameters = ["-Xexperimental"]
-}
