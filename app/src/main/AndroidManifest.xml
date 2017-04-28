@@ -37,6 +37,7 @@
         android:allowBackup="false"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
+        android:theme="@style/Theme.AppCompat"
         android:logo="@drawable/ic_actionbar"
         tools:replace="android:allowBackup,android:label,android:icon">
 
